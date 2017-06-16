@@ -15,7 +15,10 @@ def compile(file, parameter):
         quit()
     else: os.system('rm ./compile_log')
 l = len(sys.argv)
+
+# 编译选项
 cpop = '-g -DLOACL'
+
 
 if l == 1:
     print('-cr [str]         compile and run the [str]')
