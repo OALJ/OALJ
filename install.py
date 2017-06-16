@@ -4,5 +4,4 @@
 import os
 import sys
 
-if os.system('cp oijudge.py /usr/bin/oijudge'):
-    print('plese use sudo command')
+os.system('cp oijudge.py /usr/bin/oijudge')
