@@ -29,3 +29,8 @@ max running memory(256(mb)): 256
 感受一下O(∩_∩)O~~
 
 ![test](./test.png)
+
+```
+TODO LIST:
+  -- 一键扒取大型oj上的测试数据并自动打包成data和config.txt
+```
