@@ -1,4 +1,6 @@
 File Name: test.cpp
 Input Name (example#.in): test#.in
 Output Name (example#.out): test#.ans
-#s(1 2 3 4): 0 1
+#s(1 2 3 4): 0 1 2
+max running time(1(s)): 1
+max running memory(256(mb)): 256

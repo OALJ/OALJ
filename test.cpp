@@ -1,8 +1,9 @@
 # include <bits/stdc++.h>
 using namespace std;
 
+int a[3000000];
+
 int main() {
-    int a, b;
-    cin >> a >> b;
-    cout << a * b << endl;
+    cin >> a[1] >> a[2];
+    cout << a[1] + a[2];
 }
