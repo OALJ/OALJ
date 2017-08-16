@@ -5,7 +5,7 @@ import os
 import time
 
 # 编译选项
-compile_parameter = "-DLOCAL -g -O2 -Wall"
+compile_parameter = "-DLOCAL -g -Wall"
 # diff选项
 diff_parameter = "-U 0 -b -B -w"
 
@@ -36,11 +36,11 @@ def judge():
         begin_time = time.time()
         return_num = os.system("ulimit -t {0} && ulimit -v {1} && temp/main < data/{2} > temp/temp.ans 2> temp/running_log".format(max_time, max_memory, infile))
         if return_num == 35584:
-            print(" {0}     MLE      {1:.0f}ms      {2:.0f}".format(num, float(time.time() - begin_time) * 1000, unit_score))
+            print(" {0}     MLE   {1:6.0f}ms      {2:.0f}".format(num, float(time.time() - begin_time) * 1000, unit_score))
         elif return_num == 35072:
-            print(" {0}     TLE      {1:.0f}ms      {2:.0f}".format(num, float(time.time() - begin_time) * 1000, unit_score))
+            print(" {0}     TLE   {1:6.0f}ms      {2:.0f}".format(num, float(time.time() - begin_time) * 1000, unit_score))
         elif os.system("diff {0} temp/temp.ans data/{1} >> temp/diff_log".format(diff_parameter, outfile)):
-            print(" {0}      WA      {1:.0f}ms      {2:.0f}".format(num, float(time.time() - begin_time) * 1000, unit_score))
+            print(" {0}      WA   {1:6.0f}ms      {2:.0f}".format(num, float(time.time() - begin_time) * 1000, unit_score))
             if wa == False:
                 wa = True
                 os.system("cp temp/diff_log temp/first_diff_log")
@@ -49,7 +49,7 @@ def judge():
                 os.system("cp data/{0} temp/f_o_f".format(outfile))
                 first = num if first > num else first
         else:
-            print(" {0}      AC      {1:.0f}ms      {2:.0f}".format(num, float(time.time() - begin_time) * 1000, unit_score))
+            print(" {0}      AC   {1:6.0f}ms      {2:.0f}".format(num, float(time.time() - begin_time) * 1000, unit_score))
             last_score = last_score + unit_score
         the_time = the_time + (time.time() - begin_time) * 1000
     print("总分: {0:.0f}\n总时间: {1:.0f}ms".format(last_score + 0.5, float(the_time)))
