@@ -1,4 +1,5 @@
 # include <stdio.h>
+# include <string.h>
 
 inline int StrToInt(char str[]) { 
     int k = 0;
@@ -8,19 +9,27 @@ inline int StrToInt(char str[]) {
     return k;
 }
 
+// [abc]
+
 int main(int argc, char *argv[]) {
     int n = StrToInt(argv[1]);
     int i = 2;
     while(n--) { 
         int k = StrToInt(argv[i++]);
+        int len = strlen(argv[i]);
+        for(int j = 0; j < len; j++) { 
+            if(argv[i][j] == '_') argv[i][j] = ' ';
+            if(argv[i][j] == '/') argv[i][j] = '\n';
+        }
         printf("%c[1;3%dm%s", 27, k, argv[i++]);
     }
     return 0;
 }
 
 
-/* red gre ylw blu pup bgr wht
-    1   2   3   4   5   6   7
+/*
+  red gre ylw blu pup bgr wht
+   1   2   3   4   5   6   7
  
   printf("%c[1;3%cmHello, world!\n", 27, 1); // red
   printf("%c[1;3%cmHello, world!\n", 27, 2); // green
