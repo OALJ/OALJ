@@ -45,7 +45,7 @@ def judge():
     the_time = 0.0
     unit_score = round(100 / len(jing), 1)
     last_score = 0
-    print("序号    结果      时间      得分")
+    print("序号    结果     时间      得分")
     # 评测过程
 
     for j in jing:
@@ -56,9 +56,9 @@ def judge():
         ans.close()
         begin_time = time.time()
         return_run = os.system("ulimit -t {0} && ulimit -v {1} && temp/main < data/{2} > temp/temp.ans 2> temp/running_log".format(max_time, max_memory, infile))
-        return_diff = os.system("diff {0} temp/temp.ans data/{1} >> temp/diff_log".format(diff_parameter, outfile))
         use_time = float(time.time() - begin_time) * 1000
         the_time = the_time + use_time
+        return_diff = os.system("diff {0} temp/temp.ans data/{1} >> temp/diff_log".format(diff_parameter, outfile))
         # MLE
         if return_run == 35584:
             col_print("_{0}_____".format(num), 7)
