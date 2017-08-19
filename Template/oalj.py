@@ -3,19 +3,21 @@
 
 import os
 import time
-
+import colorama 
+init(autoreset=True)
 # 编译选项
 compile_parameter = "-DLOCAL -O2 -g -Wall"
 # diff选项
 diff_parameter = "-U 0 -b -B -w"
-
+map = { 1:"Fore.RED", 2:"Fore.GREEN", 3:"Fore.YELLOW", 4:"Fore.BLUE", 5:"Fore.MAGENTA", 6:"Fore.CYAN", 7:"Fore.WHITE"}
 def col_print(str, col):
-    str = str.replace(' ', '_')
-    os.system("./oalj_color 1 {0} {1}".format(col, str))
-
+    str = str.replace('_', ' ')
+    str = str.replace('/', '\n/')
+    # os.system("./oalj_color 1 {0} {1}".format(col, str))
+    print(map[col] + str);
 '''
-  red gre ylw blu pup bgr wht
-   1   2   3   4   5   6   7
+  red green yellow blue magenta cyan white
+   1    2      3     4     5      6    7
    _ = ' '
    / = '\n'
 '''

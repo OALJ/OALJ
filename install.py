@@ -7,6 +7,8 @@ fst = input("你想安装OALJ(OIer && ACMer's Local Judge)吗? (y/n)")
 if fst == 'y':
     os.system('cp oalj.py /usr/bin/oalj')
     os.system('cp oalj_color /usr/bin/oalj_color')
+    pip install colorama
+
 else:
     sec = input("你想卸载OALJ(OIer && ACMer's Local Judge)吗? (y/n)")
     if sec == 'y':

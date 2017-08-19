@@ -3,19 +3,22 @@
 
 import os
 import time
-
+import colorama 
+from colorama import init, Fore
 # 编译选项
 compile_parameter = "-DLOCAL -O2 -g -Wall"
 # diff选项
 diff_parameter = "-U 0 -b -B -w"
-
+map = { 1:Fore.RED, 2:Fore.GREEN, 3:Fore.YELLOW, 4:Fore.BLUE, 5:Fore.MAGENTA, 6:Fore.CYAN, 7:Fore.WHITE}
 def col_print(str, col):
-    str = str.replace(' ', '_')
-    os.system("./oalj_color 1 {0} {1}".format(col, str))
-
+    init(autoreset=True)
+    str = str.replace('_', ' ')
+    str = str.replace('/', '\n')
+    # os.system("./oalj_color 1 {0} {1}".format(col, str))
+    print(map[col] + str, end = "");
 '''
-  red gre ylw blu pup bgr wht
-   1   2   3   4   5   6   7
+  red green yellow blue magenta cyan white
+   1    2      3     4     5      6    7
    _ = ' '
    / = '\n'
 '''
@@ -26,7 +29,7 @@ def ___():
 def compile(file):
     ___()
     if os.system('g++ ./{0} -o temp/main {1} 2> temp/compile_log'.format(file, compile_parameter)):
-        col_print('编译错误!!', 1)
+        col_print('编译错误!!/', 1)
         ___()
         return 1
     else:
@@ -63,7 +66,7 @@ def judge():
         if return_run == 35584:
             col_print("_{0}_____".format(num), 7)
             col_print("MLE___", 3)
-            col_print("{0:5.0f}ms______{1:.0f}/".format(use_time, unit_score), 7)
+            col_print("{0:5.0f}ms______{1:.0f}/".format(use_time, 0), 7)
             if wa == False:
                 wa = True
                 get_first_data(infile)
@@ -72,7 +75,7 @@ def judge():
         elif return_run == 35072:
             col_print("_{0}_____".format(num), 7)
             col_print("TLE___", 4)
-            col_print("{0:5.0f}ms______{1:.0f}/".format(use_time, unit_score), 7)
+            col_print("{0:5.0f}ms______{1:.0f}/".format(use_time, 0), 7)
             if wa == False:
                 wa = True
                 get_first_data(infile)
@@ -83,7 +86,7 @@ def judge():
                 wa = True
                 col_print("_{0}_____".format(num), 7)
                 col_print("_WA___", 1)
-                col_print("{0:5.0f}ms______{1:.0f}/".format(use_time, unit_score), 7)
+                col_print("{0:5.0f}ms______{1:.0f}/".format(use_time, 0), 7)
                 # col_print("_{0}______WA___{1:5.0f}ms______{2:.0f}/".format(num, use_time, unit_score), 1)
                 if wa == False:
                     get_first_data(infile)
