@@ -15,7 +15,7 @@ def col_print(str, col):
     str = str.replace('_', ' ')
     str = str.replace('/', '\n')
     # os.system("./oalj_color 1 {0} {1}".format(col, str))
-    print(map[col] + str, end = "");
+    print(map[col] + str, end = "")
 '''
   red green yellow blue magenta cyan white
    1    2      3     4     5      6    7
@@ -23,18 +23,18 @@ def col_print(str, col):
    / = '\n'
 '''
 
-def ___():
+def printLine():
     col_print('-' * 30 + '/', 7)
 
 def compile(file):
-    ___()
+    printLine()
     if os.system('g++ ./{0} -o temp/main {1} 2> temp/compile_log'.format(file, compile_parameter)):
         col_print('编译错误!!/', 1)
-        ___()
+        printLine()
         return 1
     else:
         col_print("编译成功/", 2)
-        ___()
+        printLine()
         return 0
 
 def get_first_data(infile):
@@ -116,15 +116,15 @@ def judge():
     col_print("{0:.0f}/".format(last_score), 2 if wa == 0 else 1)
     col_print("总时间: {0:.0f}ms/".format(float(the_time)), 7)
     if wa:
-        ___()
+        printLine()
         print("你在第{0}个测试点出现了错误,下面是该点的输入数据:".format(first))
         os.system("cat temp/f_i_f")
-        ___()
+        printLine()
         print("上面带减号\"-\"的是你的输出,下面带加号\"+\"的是答案输出，\"@@\"之间的数字表示行号:")
         with open("temp/first_diff_log") as dl:
             for line in dl:
                 print(line, end='')
-    ___()
+    printLine()
 
 if __name__ == '__main__':
     if os.path.exists("./config.txt") == False:
@@ -155,7 +155,7 @@ if __name__ == '__main__':
 
     if compile(file):
         os.system('cat temp/compile_log')
-        ___()
+        printLine()
     else :
         judge()
     os.system("rm -rf temp")
