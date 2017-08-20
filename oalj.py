@@ -9,25 +9,25 @@ from colorama import init, Fore
 compile_parameter = "-DLOCAL -O2 -g -Wall"
 # diff选项
 diff_parameter = "-U 0 -b -B -w"
-colorMap = { 1:Fore.RED, 2:Fore.GREEN, 3:Fore.YELLOW, 4:Fore.BLUE, 5:Fore.MAGENTA, 6:Fore.CYAN, 7:Fore.WHITE}
+color_map = { 1:Fore.RED, 2:Fore.GREEN, 3:Fore.YELLOW, 4:Fore.BLUE, 5:Fore.MAGENTA, 6:Fore.CYAN, 7:Fore.WHITE}
 def col_print(str, col):
     init(autoreset=True)
     str = str.replace('_', ' ')
     str = str.replace('/', '\n')
-    print(colorMap[col] + str, end = "")
+    print(color_map[col] + str, end = "")
 
-def printLine():
+def print_line():
     col_print('-' * 30 + '/', 7)
 
 def compile(file):
-    printLine()
+    print_line()
     if os.system('g++ ./{0} -o temp/main {1} 2> temp/compile_log'.format(file, compile_parameter)):
         col_print('编译错误/', 1)
-        printLine()
+        print_line()
         return 1
     else:
         col_print("编译成功/", 2)
-        printLine()
+        print_line()
         return 0
 
 def get_first_data(infile):
@@ -106,15 +106,15 @@ def judge():
     col_print("{0:.0f}/".format(last_score), 2 if wa == 0 else 1)
     col_print("总时间: {0:.0f}ms/".format(float(the_time)), 7)
     if wa:
-        printLine()
+        print_line()
         print("你在第{0}个测试点出现了错误,下面是该点的输入数据:".format(first))
         os.system("cat temp/f_i_f")
-        printLine()
+        print_line()
         print("上面带减号\"-\"的是你的输出,下面带加号\"+\"的是答案输出，\"@@\"之间的数字表示行号:")
         with open("temp/first_diff_log") as dl:
             for line in dl:
                 print(line, end='')
-    printLine()
+    print_line()
 
 if __name__ == '__main__':
     if os.path.exists("./config.txt") == False:
@@ -145,7 +145,7 @@ if __name__ == '__main__':
 
     if compile(file):
         os.system('cat temp/compile_log')
-        printLine()
+        print_line()
     else :
         judge()
     os.system("rm -rf temp")
