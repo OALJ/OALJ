@@ -2,17 +2,18 @@
 #-*- coding: utf-8 -*-
 
 import os
+import sys
 import time
 import colorama 
 from colorama import init, Fore
+import psutil
 # 编译选项
-compile_parameter = "-DLOCAL -O2 -g -Wall"
+compile_parameter = "-DLOCAL -O2 -Wall"
 # diff选项
 diff_parameter = "-U 0 -b -B -w"
 color_map = { 1:Fore.RED, 2:Fore.GREEN, 3:Fore.YELLOW, 4:Fore.BLUE, 5:Fore.MAGENTA, 6:Fore.CYAN, 7:Fore.WHITE}
 def col_print(str, col):
     init(autoreset=True)
-    str = str.replace('_', ' ')
     str = str.replace('/', '\n')
     print(color_map[col] + str, end = "")
 
@@ -33,15 +34,27 @@ def compile(file):
 def get_first_data(infile):
     os.system("cp temp/diff_log temp/first_diff_log")
     os.system("cp data/{0} temp/f_i_f".format(infile))
-
+def get_process_pid(process_name):
+    pids = psutil.pids()
+    for pid in pids:
+        p = psutil.Process(pid)
+        if p.name() == process_name:
+            return p.pid
+    return -1
+def get_process_memory(process_pid):
+    p = psutil.Process(process_pid)
+    mem_bytes, vmem_bytes = p.memory_info()
+    mem_bytes /= (1024 * 1024)
+    return mem_bytes
+    
 def judge():
     num = 0
     wa = False
-    first = 233333333 #BUG
+    first = 233333333 
     the_time = 0.0
     unit_score = round(100 / len(jing), 1)
     last_score = 0
-    print("序号    结果     时间      得分")
+    print("序号\t结果\t时间\t得分")
     # 评测过程
 
     for j in jing:
@@ -57,18 +70,18 @@ def judge():
         return_diff = os.system("diff {0} temp/temp.ans data/{1} >> temp/diff_log".format(diff_parameter, outfile))
         # MLE
         if return_run == 35584:
-            col_print("_{0}_____".format(num), 7)
-            col_print("MLE___", 3)
-            col_print("{0:5.0f}ms______{1:.0f}/".format(use_time, 0), 7)
+            col_print("{0}\t".format(num), 7)
+            col_print("MLE\t", 3)
+            col_print("{0:.0f}ms\t{1:.0f}/".format(use_time, 0), 7)
             if wa == False:
                 wa = True
                 get_first_data(infile)
                 first = num if first > num else first
         # TLE
         elif return_run == 35072:
-            col_print("_{0}_____".format(num), 7)
-            col_print("TLE___", 4)
-            col_print("{0:5.0f}ms______{1:.0f}/".format(use_time, 0), 7)
+            col_print("{0}\t".format(num), 7)
+            col_print("TLE\t", 4)
+            col_print("{0:.0f}ms\t{1:.0f}/".format(use_time, 0), 7)
             if wa == False:
                 wa = True
                 get_first_data(infile)
@@ -77,23 +90,23 @@ def judge():
             # WA
             if return_diff:
                 wa = True
-                col_print("_{0}_____".format(num), 7)
-                col_print("_WA___", 1)
-                col_print("{0:5.0f}ms______{1:.0f}/".format(use_time, 0), 7)
+                col_print("{0}\t".format(num), 7)
+                col_print("WA\t", 1)
+                col_print("{0:.0f}ms\t{1:.0f}/".format(use_time, 0), 7)
                 if wa == False:
                     get_first_data(infile)
                     first = num if first > num else first
             # AC
             elif return_diff == 0:
-                col_print("_{0}_____".format(num), 7)
-                col_print("_AC___", 2)
-                col_print("{0:5.0f}ms______{1:.0f}/".format(use_time, unit_score), 7)
+                col_print("{0}\t".format(num), 7)
+                col_print("AC\t", 2)
+                col_print("{0:.0f}ms\t{1:.0f}/".format(use_time, unit_score), 7)
                 last_score = last_score + unit_score
         # RE
         else:
-            col_print("_{0}_____".format(num), 7)
-            col_print("_RE___", 5)
-            col_print("{0:5.0f}ms______{1:.0f}/".format(use_time, unit_score), 7)
+            col_print("{0}\t".format(num), 7)
+            col_print("RE\t", 5)
+            col_print("{0:.0f}ms\t{1:.0f}/".format(use_time, unit_score), 7)
             if wa == False:
                 wa = True
                 get_first_data(infile)
