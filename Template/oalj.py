@@ -4,36 +4,30 @@
 import os
 import time
 import colorama 
-init(autoreset=True)
+from colorama import init, Fore
 # 编译选项
 compile_parameter = "-DLOCAL -O2 -g -Wall"
 # diff选项
 diff_parameter = "-U 0 -b -B -w"
-map = { 1:"Fore.RED", 2:"Fore.GREEN", 3:"Fore.YELLOW", 4:"Fore.BLUE", 5:"Fore.MAGENTA", 6:"Fore.CYAN", 7:"Fore.WHITE"}
+color_map = { 1:Fore.RED, 2:Fore.GREEN, 3:Fore.YELLOW, 4:Fore.BLUE, 5:Fore.MAGENTA, 6:Fore.CYAN, 7:Fore.WHITE}
 def col_print(str, col):
+    init(autoreset=True)
     str = str.replace('_', ' ')
-    str = str.replace('/', '\n/')
-    # os.system("./oalj_color 1 {0} {1}".format(col, str))
-    print(map[col] + str);
-'''
-  red green yellow blue magenta cyan white
-   1    2      3     4     5      6    7
-   _ = ' '
-   / = '\n'
-'''
+    str = str.replace('/', '\n')
+    print(color_map[col] + str, end = "")
 
-def ___():
+def print_line():
     col_print('-' * 30 + '/', 7)
 
 def compile(file):
-    ___()
+    print_line()
     if os.system('g++ ./{0} -o temp/main {1} 2> temp/compile_log'.format(file, compile_parameter)):
-        col_print('编译错误!!', 1)
-        ___()
+        col_print('编译错误/', 1)
+        print_line()
         return 1
     else:
         col_print("编译成功/", 2)
-        ___()
+        print_line()
         return 0
 
 def get_first_data(infile):
@@ -43,7 +37,7 @@ def get_first_data(infile):
 def judge():
     num = 0
     wa = False
-    first = 233333333
+    first = 233333333 #BUG
     the_time = 0.0
     unit_score = round(100 / len(jing), 1)
     last_score = 0
@@ -59,13 +53,13 @@ def judge():
         begin_time = time.time()
         return_run = os.system("ulimit -t {0} && ulimit -v {1} && temp/main < data/{2} > temp/temp.ans 2> temp/running_log".format(max_time, max_memory, infile))
         use_time = float(time.time() - begin_time) * 1000
-        the_time = the_time + use_time
+        the_time += use_time
         return_diff = os.system("diff {0} temp/temp.ans data/{1} >> temp/diff_log".format(diff_parameter, outfile))
         # MLE
         if return_run == 35584:
             col_print("_{0}_____".format(num), 7)
             col_print("MLE___", 3)
-            col_print("{0:5.0f}ms______{1:.0f}/".format(use_time, unit_score), 7)
+            col_print("{0:5.0f}ms______{1:.0f}/".format(use_time, 0), 7)
             if wa == False:
                 wa = True
                 get_first_data(infile)
@@ -74,7 +68,7 @@ def judge():
         elif return_run == 35072:
             col_print("_{0}_____".format(num), 7)
             col_print("TLE___", 4)
-            col_print("{0:5.0f}ms______{1:.0f}/".format(use_time, unit_score), 7)
+            col_print("{0:5.0f}ms______{1:.0f}/".format(use_time, 0), 7)
             if wa == False:
                 wa = True
                 get_first_data(infile)
@@ -85,8 +79,7 @@ def judge():
                 wa = True
                 col_print("_{0}_____".format(num), 7)
                 col_print("_WA___", 1)
-                col_print("{0:5.0f}ms______{1:.0f}/".format(use_time, unit_score), 7)
-                # col_print("_{0}______WA___{1:5.0f}ms______{2:.0f}/".format(num, use_time, unit_score), 1)
+                col_print("{0:5.0f}ms______{1:.0f}/".format(use_time, 0), 7)
                 if wa == False:
                     get_first_data(infile)
                     first = num if first > num else first
@@ -95,14 +88,12 @@ def judge():
                 col_print("_{0}_____".format(num), 7)
                 col_print("_AC___", 2)
                 col_print("{0:5.0f}ms______{1:.0f}/".format(use_time, unit_score), 7)
-                # col_print("_{0}______AC___{1:5.0f}ms______{2:.0f}/".format(num, use_time, unit_score), 2)
                 last_score = last_score + unit_score
         # RE
         else:
             col_print("_{0}_____".format(num), 7)
             col_print("_RE___", 5)
             col_print("{0:5.0f}ms______{1:.0f}/".format(use_time, unit_score), 7)
-            # col_print("_{0}______WA___{1:5.0f}ms______{2:.0f}/".format(num, use_time, unit_score), 1)
             if wa == False:
                 wa = True
                 get_first_data(infile)
@@ -115,15 +106,15 @@ def judge():
     col_print("{0:.0f}/".format(last_score), 2 if wa == 0 else 1)
     col_print("总时间: {0:.0f}ms/".format(float(the_time)), 7)
     if wa:
-        ___()
+        print_line()
         print("你在第{0}个测试点出现了错误,下面是该点的输入数据:".format(first))
         os.system("cat temp/f_i_f")
-        ___()
+        print_line()
         print("上面带减号\"-\"的是你的输出,下面带加号\"+\"的是答案输出，\"@@\"之间的数字表示行号:")
         with open("temp/first_diff_log") as dl:
             for line in dl:
                 print(line, end='')
-    ___()
+    print_line()
 
 if __name__ == '__main__':
     if os.path.exists("./config.txt") == False:
@@ -154,7 +145,7 @@ if __name__ == '__main__':
 
     if compile(file):
         os.system('cat temp/compile_log')
-        ___()
+        print_line()
     else :
         judge()
     os.system("rm -rf temp")
