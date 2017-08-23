@@ -10,9 +10,14 @@ Output Name (example#.out): test#.ans
 max running time(1(s)): 1
 max running memory(256(mb)): 256
 ```
+#### 功能
 
+目前支持的功能：判断 AC，WA，TLE，MLE
+正在开发的功能：显示内存占用
 
 #### 使用方法
+
+注意，暂时（未来八成也不会）不支持Windows系统
 
 ##### 安装:
 
@@ -33,4 +38,5 @@ max running memory(256(mb)): 256
 ```
 TODO LIST:
   -- 一键扒取大型oj上的测试数据并自动打包成data和config.txt
+  -- 显示内存占用
 ```
