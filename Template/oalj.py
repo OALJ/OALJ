@@ -89,11 +89,11 @@ def judge():
         elif return_run == 0:
             # WA
             if return_diff:
-                wa = True
                 col_print("{0}\t".format(num), 7)
                 col_print("WA\t", 1)
                 col_print("{0:.0f}ms\t{1:.0f}/".format(use_time, 0), 7)
                 if wa == False:
+                    wa = True
                     get_first_data(infile)
                     first = num if first > num else first
             # AC
