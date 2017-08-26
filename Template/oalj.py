@@ -151,7 +151,11 @@ if __name__ == '__main__':
     jing = lst[3].split(' ')
     max_time = int(lst[4])
     max_memory = int(lst[5]) * 1024 # kb
-
+    print(input_name)
+    print(output_name)
+    print(jing)
+    print(max_memory)
+    print(max_time)
 
     os.system("rm -rf temp")
     os.system("mkdir temp")

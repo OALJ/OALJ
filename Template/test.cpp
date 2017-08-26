@@ -1,10 +1,9 @@
 # include <bits/stdc++.h>
 using namespace std;
 
-int a[300000];
+int a, b;
 
 int main() {
-    cin >> a[1] >> a[2];
-    for(int i = 1; i <= 1000000000; i++) a[3]++;
-    cout << a[1] + a[2];
+    cin >> a >> b;
+    cout << a + b;
 }
