@@ -6,7 +6,6 @@ import sys
 import time
 import colorama 
 from colorama import init, Fore
-import psutil
 # 编译选项
 compile_parameter = "-DLOCAL -O2 -Wall"
 # diff选项
@@ -33,19 +32,6 @@ def get_first_data(infile):
     os.system("cp temp/diff_log temp/first_diff_log")
     os.system("cp data/{0} temp/f_i_f".format(infile))
 
-def get_process_pid(process_name):
-    pids = psutil.pids()
-    for pid in pids:
-        p = psutil.Process(pid)
-        if p.name() == process_name:
-            return p.pid
-    return -1
-def get_process_memory(process_pid):
-    p = psutil.Process(process_pid)
-    mem_bytes, vmem_bytes = p.memory_info()
-    mem_bytes /= (1024 * 1024)
-    return mem_bytes
-    
 def judge():
     num = 0
     wa = False
