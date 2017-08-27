@@ -1,5 +1,5 @@
 # !/usr/bin/env python3
-# coding = utf-8
+#-*- coding: utf-8 -*-
 import sys
 import os
 if input("你想安装OALJ(OIer && ACMer's Local Judge)吗? (y/n)") == 'y':
