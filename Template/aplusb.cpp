@@ -1,9 +1,7 @@
 # include <bits/stdc++.h>
 using namespace std;
-
-int a, b;
-
 int main() {
+    double a, b;
     cin >> a >> b;
-    cout << a + b;
+    cout << (int) (a + b);
 }
