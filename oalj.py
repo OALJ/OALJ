@@ -28,12 +28,11 @@ def compile(file):
         col_print("编译成功\n", 2)
         print_line()
         return 0
-def init():
-
 
 def get_first_data(infile):
     os.system("cp temp/diff_log temp/first_diff_log")
     os.system("cp data/{0} temp/f_i_f".format(infile))
+
 def get_process_pid(process_name):
     pids = psutil.pids()
     for pid in pids:

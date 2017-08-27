@@ -34,7 +34,7 @@ max running memory(256(mb)): 256
 
 #### cogs[强推!!]
 
-在需评测`cpp`文件目录下执行`cdc` 并输入题号来获取数据及`config.txt`
+在需评测`cpp`文件目录下执行`cogs` 并输入题号来获取数据及`config.txt`
 
 效果如图:
 
@@ -52,6 +52,8 @@ max running memory(256(mb)): 256
 
 ```
 TODO LIST:
-  √- 一键扒取大型oj上的测试数据并自动打包成data和config.txt
+  -- 一键扒取大型oj上的测试数据并自动打包成data和config.txt
+    √ cogs.py 已经完成
+    - loj.py 在开发
   -- 显示内存占用
 ```

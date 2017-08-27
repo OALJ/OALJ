@@ -6,7 +6,7 @@ import os
 fst = input("你想安装OALJ(OIer && ACMer's Local Judge)吗? (y/n)")
 if fst == 'y':
     os.system('cp oalj.py /usr/bin/oalj')
-    os.system('cp cdc.py /usr/bin/cdc')
+    os.system('cp cogs.py /usr/bin/cogs')
     os.system("pip3 install colorama")
     os.system("pip3 install request")
 else:
