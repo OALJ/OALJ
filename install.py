@@ -8,6 +8,8 @@ if fst == 'y':
     os.system('cp oalj.py /usr/bin/oalj')
     os.system('cp cogs.py /usr/bin/cogs')
     os.system('cp loj.py /usr/bin/loj')
+    os.system("sudo apt-get install python3-pip")
+    os.system("pip3 install urllib3[socks]")
     os.system("pip3 install colorama")
     os.system("pip3 install request")
 else:
