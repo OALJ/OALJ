@@ -38,6 +38,7 @@ if __name__ == '__main__':
     # config.txt
 
     # FileName
+    FileName = "test.cpp"
     os.system("rm temp 2> /dev/null")
     os.system("ls > temp")
     with open("temp", "r") as ls:
