@@ -43,6 +43,9 @@ def judge():
     last_score = 0
     print("序号\t结果\t时间\t得分")
     # 评测过程
+    if len(sys.argv) == 2:
+        if sys.argv[1] == '-d':
+            debug = 1;
 
     for j in jing:
         num = num + 1
@@ -55,6 +58,7 @@ def judge():
         use_time = float(time.time() - begin_time) * 1000
         the_time += use_time
         return_diff = os.system("diff {0} temp/temp.ans data/{1} >> temp/diff_log".format(diff_parameter, outfile))
+        
         # MLE
         if return_run == 35584:
             col_print("{0}\t".format(num), 7)
@@ -99,19 +103,24 @@ def judge():
                 get_first_data(infile)
                 first = num if first > num else first
         # 获取运行时间
+        if wa and debug:
+            break
+
+
 
     # 输出信息
-    col_print("总分: ", 7)
-    col_print("{0:.0f}\n".format(last_score), 2 if wa == 0 else 1)
-    col_print("总时间: {0:.0f}ms\n".format(float(the_time)), 7)
+    if debug == 0:
+        col_print("总分: ", 7)
+        col_print("{0:.0f}\n".format(last_score), 2 if wa == 0 else 1)
+        col_print("总时间: {0:.0f}ms\n".format(float(the_time)), 7)
     if wa:
         print_line()
         print("你在第{0}个测试点出现了错误,下面是该点的输入数据:".format(first))
-        os.system("cat temp/f_i_f")
         cnt = 0
         with open("temp/f_i_f") as dl:
             for line in dl:
-                if cnt >= 100:
+                if cnt >= (15 if debug == 0 else 30):
+                    print('...')
                     break
                 print(line, end='')
                 cnt += 1
@@ -121,7 +130,8 @@ def judge():
         cnt = 0
         with open("temp/first_diff_log") as dl:
             for line in dl:
-                if cnt >= 100:
+                if cnt >= (15 if debug == 0 else 30):
+                    print('...')
                     break
                 print(line, end='')
                 cnt += 1

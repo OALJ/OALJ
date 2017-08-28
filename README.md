@@ -50,10 +50,20 @@ max running memory(256(mb)): 256
 
 ![ac](./ac.png)
 
+###  注意事项
+
+  普通模式下出现`WA/TLE/MLE`后输出的错误点数据与正确数据上限为*15行* 
+
+  使用`oalj -d`开启debug模式之后上限改为*30行*, 并且程序运行到第一个错误点会停下
+
 ```
 TODO LIST:
   -- 一键扒取大型oj上的测试数据并自动打包成data和config.txt
     √ cogs.py 已经完成
     √ loj.py 已经完成
+    - syzoj
+    - codeforces
+    - USACO
   -- 显示内存占用
+  -- 加入debug mode, 便于刷题时使用
 ```
