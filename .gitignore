@@ -1,1 +1,13 @@
-.idea
+*.[o]
+*.exe
+*.in
+*.run
+*.out
+*swp
+!clean
+*~
+cmake-build-debug
+CMakeLists.txt
+.idea/
+data
+config.txt
