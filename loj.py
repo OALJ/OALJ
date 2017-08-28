@@ -27,13 +27,17 @@ if __name__ == '__main__':
     NameList = []
     for i in DataList:
         NameList.append(i.replace(".in",""))
+    print("以下是题目信息...")
     print("Time: {0} ms\nMemory: {1} MiB".format(Time, Memory))
     os.system("rm -rf data")
     os.system("mkdir data")
     os.system("cd data")
+    print("正在下载数据包...")
     os.system("wget -q -O {0}.zip  https://loj.ac/problem/{0}/testdata/download".format(id))
+    print("下载完成...正在解压数据包...")
     os.system("unzip -q {0}.zip -d data/".format(id))
     os.system("rm {0}.zip".format(id))
+    print("解压完成啦w")
     # CppFileName
     os.system("rm temp 2> /dev/null")
     os.system("ls > temp")
@@ -47,6 +51,7 @@ if __name__ == '__main__':
             if temp == 'cpp\n':
                 CppFileName = line.rstrip()
     os.system("rm temp")
+    print("正在生成配置文件...")
     with open("config.txt", "w") as Config:
         Config.write("File Name: {0}\n".format(CppFileName))
         Config.write("Input Name: {0}\n".format('#.in'))
@@ -57,3 +62,4 @@ if __name__ == '__main__':
         Config.write(temp + '\n')
         Config.write("Max Running Time: {0}\n".format(Time))
         Config.write("Max Running Memory: {0}".format(Memory))
+    print("配置文件生成完成啦，由于LOJ不公开data_rule，自动生成的config可能会存在问题，请谨慎使用qwq")

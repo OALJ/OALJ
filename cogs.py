@@ -53,6 +53,7 @@ if __name__ == '__main__':
 
 
     print("FileName: {0}\nTime: {1}\nMemory: {2}".format(FileName, Time, Memory))
+    print("正在生成配置文件...")
     with open("config.txt", "w") as Config:
         Config.write("File Name: {0}\n".format(FileName))
         Config.write("Input Name: {0}\n".format(DateName + '#.in'))
@@ -63,4 +64,4 @@ if __name__ == '__main__':
         Config.write(temp + '\n')
         Config.write("Max Running Time: {0}\n".format(Time))
         Config.write("Max Running Memory: {0}".format(Memory))
-
+    print("配置文件生成完成啦，在当前目录下执行oalj即可评测啦")
