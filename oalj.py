@@ -43,10 +43,6 @@ def judge():
     last_score = 0
     print("序号\t结果\t时间\t得分")
     # 评测过程
-    if len(sys.argv) == 2:
-        if sys.argv[1] == '-d':
-            debug = 1;
-
     for j in jing:
         num = num + 1
         infile = j.join(input_name)
@@ -103,23 +99,20 @@ def judge():
                 get_first_data(infile)
                 first = num if first > num else first
         # 获取运行时间
-        if wa and debug:
-            break
 
 
 
     # 输出信息
-    if debug == 0:
-        col_print("总分: ", 7)
-        col_print("{0:.0f}\n".format(last_score), 2 if wa == 0 else 1)
-        col_print("总时间: {0:.0f}ms\n".format(float(the_time)), 7)
+    col_print("总分: ", 7)
+    col_print("{0:.0f}\n".format(last_score), 2 if wa == 0 else 1)
+    col_print("总时间: {0:.0f}ms\n".format(float(the_time)), 7)
     if wa:
         print_line()
         print("你在第{0}个测试点出现了错误,下面是该点的输入数据:".format(first))
         cnt = 0
         with open("temp/f_i_f") as dl:
             for line in dl:
-                if cnt >= (15 if debug == 0 else 30):
+                if cnt >= (30):
                     print('...')
                     break
                 print(line, end='')
@@ -130,7 +123,7 @@ def judge():
         cnt = 0
         with open("temp/first_diff_log") as dl:
             for line in dl:
-                if cnt >= (15 if debug == 0 else 30):
+                if cnt >= (30):
                     print('...')
                     break
                 print(line, end='')
