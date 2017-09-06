@@ -1,9 +1,13 @@
 #!/usr/bin/env python3
 import requests
+import sys
 import os
 
 if __name__ == '__main__':
-    id = (input("请输入题目编号(COGS): "))
+    if len(sys.argv) == 2:
+        id = sys.argv[1]
+    else :
+        id = (input("请输入题目编号(COGS): "))
     Url = 'http://cogs.pro/cogs/problem/problem.php?pid={0}'.format(id)
     Page = requests.get(Url)
     html = str(Page.content)
