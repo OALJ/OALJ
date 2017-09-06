@@ -4,7 +4,10 @@ import os
 import re
 
 if __name__ == '__main__':
-    id = (input('请输入题目编号(LOJ): '))
+    if len(sys.argv) == 2:
+        id = sys.argv[1]
+    else :
+        id = (input('请输入题目编号(LOJ): '))
     Url = "https://loj.ac/problem/" + id
     DataUrl = "https://loj.ac/problem/{0}/testdata".format(id)
     Page = requests.get(Url)
