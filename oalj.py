@@ -50,16 +50,11 @@ def judge():
         ans = open("temp/temp.ans", "w+")
         ans.close()
         begin_time = time.time()
-
-        pid = os.fork()
-        if pid == 0: # son
-            return_run = os.system("temp/main < data/{2} > temp/temp.ans 2> temp/running_log".format(max_time, max_memory, infile))
-            
-        
-        
+        return_run = os.system("ulimit -t {0} && ulimit -v {1} && temp/main < data/{2} > temp/temp.ans 2> temp/running_log".format(max_time, max_memory, infile))
         use_time = float(time.time() - begin_time) * 1000
         the_time += use_time
         return_diff = os.system("diff {0} temp/temp.ans data/{1} >> temp/diff_log".format(diff_parameter, outfile))
+
         
         # MLE
         if return_run == 35584:
