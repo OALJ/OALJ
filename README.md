@@ -14,7 +14,7 @@ max running memory(256(mb)): 256
 
 目前支持的功能：判断 `AC`，`WA`，`TLE`，`MLE`
 
-正在开发的功能：显示内存占用   // $tan\frac{\pi}{2}$
+正在开发的功能：显示内存占用   // $\tan\frac{\pi}{2}$
 
 ---
 
@@ -36,6 +36,13 @@ max running memory(256(mb)): 256
 
 在需评测`cpp`文件目录下执行`cogs` 并输入题号来获取数据及`config.txt`
 
+可以使用参数或者输入题号
+
+``` bash
+$ cogs 1 # 获取cogs上题号为1的数据
+$ cogs   # 获取cogs上题目的数据，根据引导使用
+```
+
 效果如图:
 
 ![cogs](./cogs.gif)
@@ -50,6 +57,10 @@ max running memory(256(mb)): 256
 
 ![ac](./ac.png)
 
+#### OALJ
+
+使用`oalj -r`可以删除当前目录下的`data`文件夹和`config.txt`文件
+
 ###  注意事项
 
   普通模式下出现`WA/TLE/MLE`后输出的错误点数据与正确数据上限为*15行* 
@@ -61,7 +72,7 @@ TODO LIST:
   -- 一键扒取大型oj上的测试数据并自动打包成data和config.txt
     √ cogs.py 已经完成
     √ loj.py 已经完成
-    - syzoj
+    √ syzoj 已经完成
     - codeforces
     - USACO
   -- 显示内存占用

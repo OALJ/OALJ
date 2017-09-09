@@ -136,7 +136,8 @@ if __name__ == '__main__':
     if len(sys.argv) == 2:
         if sys.argv[1] == '-r':
             os.system("rm -rf ./data")
-            print("已清除data文件夹")
+            os.system("rm ./config.txt")
+            print("已清除data文件夹和config.txt")
             exit(0)
     if os.path.exists("./config.txt") == False:
         print("请填写config.txt")

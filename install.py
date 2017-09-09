@@ -8,6 +8,7 @@ if fst != 'n':
     os.system('sudo cp oalj.py /usr/bin/oalj')
     os.system('sudo cp cogs.py /usr/bin/cogs')
     os.system('sudo cp loj.py /usr/bin/loj')
+    os.system('sudo cp syzoj.py /usr/bin/syzoj')
     ask = input("是否安装pip以及库文件?(y/n, 默认为y)")
     if ask != 'n':
         os.system("sudo apt-get install python3-pip")
