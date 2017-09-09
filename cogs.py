@@ -34,12 +34,6 @@ if __name__ == '__main__':
         AnsFlieUrl = "http://cogs.pro/cogs/problem/QuiXplorer/index.php?action=download&dir={0}&item={1}&order=name&srt=yes".format(DateName, AnsFlieName)
         os.system("wget -q -O {0} {1}".format(InputFlieName, InputFlieUrl))
         os.system("wget -q -O {0} {1}".format(AnsFlieName, AnsFlieUrl))
-        InputFile = requests.get(InputFlieUrl)
-        AnsFile = requests.get(AnsFlieUrl)
-        with open("data/{0}".format(InputFlieName), "wb") as line:
-            line.write(InputFile.content)
-        with open("data/{0}".format(AnsFlieName), "wb") as line:
-            line.write(AnsFile.content)
     for i in range(1, DateCnt + 1):
         InputFlieName = DateName + str(i) + '.in'
         AnsFlieName = DateName + str(i) + '.ans'

@@ -133,6 +133,11 @@ def judge():
 
 if __name__ == '__main__':
     init(autoreset=True)
+    if len(sys.argv) == 2:
+        if sys.argv[1] == '-r':
+            os.system("rm -rf ./data")
+            print("已清除data文件夹")
+            exit(0)
     if os.path.exists("./config.txt") == False:
         print("请填写config.txt")
         cf = open("config.txt", "w+")
