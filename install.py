@@ -21,3 +21,4 @@ else:
         os.system("sudo rm /use/bin/oalj")
         os.system('sudo rm /usr/bin/cogs')
         os.system('sudo rm /usr/bin/loj')
+        os.system('sudo rm /usr/bin/syzoj')
