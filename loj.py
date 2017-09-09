@@ -37,7 +37,7 @@ if __name__ == '__main__':
     os.system("mkdir data")
     os.system("cd data")
     print("正在下载数据包...")
-    os.system("wget -q -O {0}.zip  https://loj.ac/problem/{0}/testdata/download".format(id))
+    os.system("wget -O {0}.zip  https://loj.ac/problem/{0}/testdata/download".format(id))
     print("下载完成...正在解压数据包...")
     os.system("unzip -q {0}.zip -d data/".format(id))
     os.system("rm {0}.zip".format(id))
