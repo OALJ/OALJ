@@ -2,7 +2,7 @@
 #-*- coding: utf-8 -*-
 import sys
 import os
-
+print("LocalJudge OALJ developed by kZime && Margatroid with ❤")
 fst = input("你想安装OALJ(OIer && ACMer's Local Judge)吗? (y/n， 默认为y)")
 if fst != 'n':
     os.system('sudo cp oalj.py /usr/bin/oalj')
