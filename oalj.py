@@ -5,6 +5,9 @@ import os
 import sys
 import time
 import colorama 
+import subprocess
+import psutil
+from subprocess import Popen
 from colorama import init, Fore
 # 编译选项
 compile_parameter = "-DLOCAL -O2 -Wall"
@@ -33,7 +36,15 @@ def compile(file):
 def get_first_data(infile):
     os.system("cp temp/diff_log temp/first_diff_log")
     os.system("cp data/{0} temp/f_i_f".format(infile))
-
+def get_process_memory(p):
+    try:
+        mem_info = str(p.memory_info())
+    except Exception:
+        return 0
+    rss_bytes = int(mem_info.split(',')[0].split('=')[-1])
+    vms_bytes = int(mem_info.split(',')[1].split('=')[-1])
+    mem_all = float(rss_bytes + vms_bytes) / 1024 / 1024
+    return mem_all
 def judge():
     num = 0
     wa = False
@@ -49,15 +60,30 @@ def judge():
         outfile = j.join(output_name)
         ans = open("temp/temp.ans", "w+")
         ans.close()
+        process_status = "Running"
         begin_time = time.time()
-        return_run = os.system("ulimit -t {0} && ulimit -v {1} && temp/main < data/{2} > temp/temp.ans 2> temp/running_log".format(max_time, max_memory, infile))
+        child_process = Popen("temp/main", 0, None, open("data/{0}".format(infile), "wb"), open("temp/temp.ans", "wb"), open("temp/running_log", "wb"))
+        max_memory_used = 0
+        p = psutil.Process(child_process.pid)
+        while p.is_running():
+            mem = get_process_memory(p)
+            if time.time() - begin_time > max_time:
+                child_process.kill()
+                process_status = "TLE"
+            if mem > max_memory:
+                child_process.kill()
+                process_status = "MLE"
+            max_memory_used = max(max_memory_used, mem)
+        return_run = child_process.returncode
+        # return_run = os.system("ulimit -t {0} && ulimit -v {1} && temp/main < data/{2} > temp/temp.ans 2> temp/running_log".format(max_time, max_memory, infile))
         use_time = float(time.time() - begin_time) * 1000
+        memory_used = max_memory_used
         the_time += use_time
         return_diff = os.system("diff {0} temp/temp.ans data/{1} >> temp/diff_log".format(diff_parameter, outfile))
-
+        print("内存：{0}MiB".format(memory_used))
         
         # MLE
-        if return_run == 35584:
+        if process_status == "MLE":
             col_print("{0}\t".format(num), 7)
             col_print("MLE\t", 3)
             col_print("{0:.0f}ms\t{1:.0f}\n".format(use_time, 0), 7)
@@ -66,7 +92,7 @@ def judge():
                 get_first_data(infile)
                 first = num if first > num else first
         # TLE
-        elif return_run == 35072:
+        elif process_status == "TLE":
             col_print("{0}\t".format(num), 7)
             col_print("TLE\t", 4)
             col_print("{0:.0f}ms\t{1:.0f}\n".format(use_time, 0), 7)
