@@ -11,3 +11,5 @@ CMakeLists.txt
 .idea/
 data
 config.txt
+*.cpp
+Template

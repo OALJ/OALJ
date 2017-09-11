@@ -52,20 +52,21 @@ def judge():
     the_time = 0.0
     unit_score = round(100 / len(jing), 1)
     last_score = 0
-    print("序号\t结果\t时间\t得分")
+    print("序号\t结果\t时间\t内存\t返回值\t得分")
     # 评测过程
     for j in jing:
         num = num + 1
         infile = j.join(input_name)
         outfile = j.join(output_name)
-        ans = open("temp/temp.ans", "w+")
-        ans.close()
         process_status = "Running"
         begin_time = time.time()
-        child_process = Popen("temp/main", 0, None, open("data/{0}".format(infile), "wb"), open("temp/temp.ans", "wb"), open("temp/running_log", "wb"))
+        input_file = open("data/{0}".format(infile), "r")
+        output_file = open("temp/temp.ans", "w")
+        err_file = open("temp/running_log", "w")
+        child_process = Popen("temp/main", 0, None, stdin = input_file, stdout = output_file, stderr = err_file)
         max_memory_used = 0
         p = psutil.Process(child_process.pid)
-        while p.is_running():
+        while child_process.poll() == None:
             mem = get_process_memory(p)
             if time.time() - begin_time > max_time:
                 child_process.kill()
@@ -74,19 +75,21 @@ def judge():
                 child_process.kill()
                 process_status = "MLE"
             max_memory_used = max(max_memory_used, mem)
+        child_process.poll()
         return_run = child_process.returncode
+        input_file.close()
+        output_file.close()
+        err_file.close()
         # return_run = os.system("ulimit -t {0} && ulimit -v {1} && temp/main < data/{2} > temp/temp.ans 2> temp/running_log".format(max_time, max_memory, infile))
         use_time = float(time.time() - begin_time) * 1000
         memory_used = max_memory_used
         the_time += use_time
         return_diff = os.system("diff {0} temp/temp.ans data/{1} >> temp/diff_log".format(diff_parameter, outfile))
-        print("内存：{0}MiB".format(memory_used))
-        
         # MLE
         if process_status == "MLE":
             col_print("{0}\t".format(num), 7)
             col_print("MLE\t", 3)
-            col_print("{0:.0f}ms\t{1:.0f}\n".format(use_time, 0), 7)
+            col_print("{0:.0f}ms\t{1:.2f}MB\t{2}\t{3:.0f}\n".format(use_time, memory_used, return_run, 0), 7)
             if wa == False:
                 wa = True
                 get_first_data(infile)
@@ -95,7 +98,7 @@ def judge():
         elif process_status == "TLE":
             col_print("{0}\t".format(num), 7)
             col_print("TLE\t", 4)
-            col_print("{0:.0f}ms\t{1:.0f}\n".format(use_time, 0), 7)
+            col_print("{0:.0f}ms\t{1:.2f}MB\t{2}\t{3:.0f}\n".format(use_time, memory_used, return_run, 0), 7)
             if wa == False:
                 wa = True
                 get_first_data(infile)
@@ -105,7 +108,7 @@ def judge():
             if return_diff:
                 col_print("{0}\t".format(num), 7)
                 col_print("WA\t", 1)
-                col_print("{0:.0f}ms\t{1:.0f}\n".format(use_time, 0), 7)
+                col_print("{0:.0f}ms\t{1:.2f}MB\t{2}\t{3:.0f}\n".format(use_time, memory_used, return_run, 0), 7)
                 if wa == False:
                     wa = True
                     get_first_data(infile)
@@ -114,13 +117,13 @@ def judge():
             elif return_diff == 0:
                 col_print("{0}\t".format(num), 7)
                 col_print("AC\t", 2)
-                col_print("{0:.0f}ms\t{1:.0f}\n".format(use_time, unit_score), 7)
+                col_print("{0:.0f}ms\t{1:.2f}MB\t{2}\t{3:.0f}\n".format(use_time, memory_used, return_run, 0), 7)
                 last_score = last_score + unit_score
         # RE
         else:
             col_print("{0}\t".format(num), 7)
             col_print("RE\t", 5)
-            col_print("{0:.0f}ms\t{1:.0f}\n".format(use_time, unit_score), 7)
+            col_print("{0:.0f}ms\t{1:.2f}MB\t{2}\t{3:.0f}\n".format(use_time, memory_used, return_run, 0), 7)
             if wa == False:
                 wa = True
                 get_first_data(infile)
