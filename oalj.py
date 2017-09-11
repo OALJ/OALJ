@@ -117,7 +117,7 @@ def judge():
             elif return_diff == 0:
                 col_print("{0}\t".format(num), 7)
                 col_print("AC\t", 2)
-                col_print("{0:.0f}ms\t{1:.2f}MB\t{2}\t{3:.0f}\n".format(use_time, memory_used, return_run, 0), 7)
+                col_print("{0:.0f}ms\t{1:.2f}MB\t{2}\t{3:.0f}\n".format(use_time, memory_used, return_run, 10), 7)
                 last_score = last_score + unit_score
         # RE
         else:
