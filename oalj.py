@@ -19,7 +19,7 @@ def col_print(str, col):
     print(color_map[col] + str, end = "")
 
 def print_line():
-    col_print('-' * 30 + '\n', 7)
+    col_print('-' * 50 + '\n', 7)
 
 def compile(file):
     print_line()
