@@ -68,10 +68,10 @@ def judge():
         p = psutil.Process(child_process.pid)
         while child_process.poll() == None:
             mem = get_process_memory(p)
-            if time.time() - begin_time > max_time:
+            if time.time() - begin_time > float(max_time) / 1000:
                 child_process.kill()
                 process_status = "TLE"
-            if mem > max_memory:
+            if mem * 1024 > max_memory:
                 child_process.kill()
                 process_status = "MLE"
             max_memory_used = max(max_memory_used, mem)
