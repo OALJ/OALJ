@@ -38,7 +38,6 @@ if __name__ == '__main__':
             line.write(InputFile.content)
         with open("data/{0}".format(AnsFlieName), "wb") as line:
             line.write(AnsFile.content)
-
     # config.txt
 
     # FileName
@@ -55,7 +54,7 @@ if __name__ == '__main__':
                 FileName = line.rstrip()
     os.system("rm temp 2> /dev/null")
 
-
+    Time = float(Time) * 1000
     print("FileName: {0}\nTime: {1}\nMemory: {2}".format(FileName, Time, Memory))
     print("正在生成配置文件...")
     with open("config.txt", "w") as Config:
