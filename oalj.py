@@ -66,6 +66,7 @@ def judge():
         child_process = Popen("temp/main", 0, None, stdin = input_file, stdout = output_file, stderr = err_file)
         max_memory_used = 0
         p = psutil.Process(child_process.pid)
+        time.sleep(0.002)
         while child_process.poll() == None:
             mem = get_process_memory(p)
             if time.time() - begin_time > float(max_time) / 1000:
