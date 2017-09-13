@@ -14,9 +14,7 @@ max running memory(256(mb)): 256
 ```
 ## 功能
 
-目前支持的功能：判断 `AC`，`WA`，`TLE`，`MLE`
-
-正在开发的功能：显示内存占用   // $\tan\frac{\pi}{2}$
+目前支持的功能：判断 `AC`，`WA`，`TLE`，`MLE`，显示时间使用, 显示内存占用。
 
 ---
 
@@ -26,19 +24,19 @@ max running memory(256(mb)): 256
 
 ## 使用方法
 
-注意，暂时~~(未来八成也不会)~~不支持Windows系统.
+注意，暂时~~(未来八成也不会)~~不支持Windows系统。
 
 ### 安装:
 
-执行`install.py`安照引导进行安装,**需要`sudo`权限.**
+执行`install.py`安照引导进行安装,**需要`sudo`权限。**
 
 ### 使用:
 
-#### cogs&&LOJ[强推!!]
+#### COGS && LOJ && SYZOJ
 
-在需评测`cpp`文件目录下执行`cogs` 并输入题号来获取数据及`config.txt`
+在需评测`cpp`文件目录下执行`cogs` 并输入题号来获取数据及`config.txt` 。
 
-可以使用参数或者输入题号
+可以使用参数或者输入题号。
 
 ``` bash
 $ cogs 1 # 获取cogs上题号为1的数据
@@ -51,7 +49,7 @@ $ cogs   # 获取cogs上题目的数据，根据引导使用
 
 #### 非cogs
 
-将数据放在data带评测文件目录内,并执行`oalj` 生成`config.txt`模板, 然后进行填写
+将数据放在data带评测文件目录内，并执行`oalj` 生成`config.txt`模板，然后进行填写。
 
 之后执行`oalj`
 
@@ -61,13 +59,15 @@ $ cogs   # 获取cogs上题目的数据，根据引导使用
 
 #### OALJ
 
-使用`oalj -r`可以删除当前目录下的`data`文件夹和`config.txt`文件
+使用`oalj -r`可以删除当前目录下的`data`文件夹和`config.txt`文件。
+
+使用`oalj -i [test.cpp]` 将忽略掉`config.txt` 中的`File name` , 直接对`[test.cpp]` 进行评测。
 
 ###  注意事项
 
-  普通模式下出现`WA/TLE/MLE`后输出的错误点数据与正确数据上限为*15行* 
+<!---普通模式下出现`WA/TLE/MLE`后输出的错误点数据与正确数据上限为*15行*-->  
 
-  ~~使用`oalj -d`开启debug模式之后上限改为*30行*, 并且程序运行到第一个错误点会停下~~
+<!-- ~~使用`oalj -d`开启debug模式之后上限改为*30行*, 并且程序运行到第一个错误点会停下 ~~-->
 
 ```
 TODO LIST:
@@ -77,6 +77,7 @@ TODO LIST:
     √ syzoj 已经完成
     - codeforces
     - USACO
-  -- 显示内存占用
+  -√ 显示内存占用
   -- 加入debug mode, 便于刷题时使用
 ```
+

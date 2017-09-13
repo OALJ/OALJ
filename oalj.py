@@ -9,12 +9,16 @@ import subprocess
 import psutil
 from subprocess import Popen
 from colorama import init, Fore
+
+
 # 编译选项
 compile_parameter = "-DLOCAL -O2 -Wall"
 # diff选项
 diff_parameter = "-U 0 -b -B -w"
 
+
 color_map = { 1:Fore.RED, 2:Fore.GREEN, 3:Fore.YELLOW, 4:Fore.BLUE, 5:Fore.MAGENTA, 6:Fore.CYAN, 7:Fore.WHITE}
+
 def col_print(str, col):
     print(color_map[col] + str, end = "")
 
@@ -36,6 +40,7 @@ def compile(file):
 def get_first_data(infile):
     os.system("cp temp/diff_log temp/first_diff_log")
     os.system("cp data/{0} temp/f_i_f".format(infile))
+
 def get_process_memory(p):
     try:
         mem_info = str(p.memory_info())
@@ -45,6 +50,7 @@ def get_process_memory(p):
     vms_bytes = int(mem_info.split(',')[1].split('=')[-1])
     mem_all = float(rss_bytes + vms_bytes) / 1024 / 1024
     return mem_all
+
 def judge():
     num = 0
     wa = False
@@ -53,6 +59,7 @@ def judge():
     unit_score = round(100 / len(jing), 1)
     last_score = 0
     print("序号\t结果\t时间\t内存\t返回值\t得分")
+
     # 评测过程
     for j in jing:
         num = num + 1
@@ -80,11 +87,19 @@ def judge():
         input_file.close()
         output_file.close()
         err_file.close()
-        # return_run = os.system("ulimit -t {0} && ulimit -v {1} && temp/main < data/{2} > temp/temp.ans 2> temp/running_log".format(max_time, max_memory, infile))
+    
+    # return_run = os.system("ulimit -t {0} && ulimit -v {1} && temp/main < data/{2} > temp/temp.ans 2> temp/running_log".format(max_time, max_memory, infile))
         use_time = float(time.time() - begin_time) * 1000
+        
+        #时间校准
+        if use_time > 2:
+            use_time -= 2
+        else:
+            use_time = 0
         memory_used = max_memory_used
         the_time += use_time
         return_diff = os.system("diff {0} temp/temp.ans data/{1} >> temp/diff_log".format(diff_parameter, outfile))
+        
         # MLE
         if process_status == "MLE":
             col_print("{0}\t".format(num), 7)
@@ -94,6 +109,7 @@ def judge():
                 wa = True
                 get_first_data(infile)
                 first = num if first > num else first
+        
         # TLE
         elif process_status == "TLE":
             col_print("{0}\t".format(num), 7)
@@ -104,6 +120,7 @@ def judge():
                 get_first_data(infile)
                 first = num if first > num else first
         elif return_run == 0:
+            
             # WA
             if return_diff:
                 col_print("{0}\t".format(num), 7)
@@ -113,12 +130,14 @@ def judge():
                     wa = True
                     get_first_data(infile)
                     first = num if first > num else first
+            
             # AC
             elif return_diff == 0:
                 col_print("{0}\t".format(num), 7)
                 col_print("AC\t", 2)
                 col_print("{0:.0f}ms\t{1:.2f}MB\t{2}\t{3:.0f}\n".format(use_time, memory_used, return_run, 0), 7)
                 last_score = last_score + unit_score
+        
         # RE
         else:
             col_print("{0}\t".format(num), 7)
@@ -130,12 +149,12 @@ def judge():
                 first = num if first > num else first
         # 获取运行时间
 
-
-
-    # 输出信息
+    # 输出结果
     col_print("总分: ", 7)
     col_print("{0:.0f}\n".format(last_score), 2 if wa == 0 else 1)
     col_print("总时间: {0:.0f}ms\n".format(float(the_time)), 7)
+    
+    # 输出数据
     if wa:
         print_line()
         print("你在第{0}个测试点出现了错误,下面是该点的输入数据:".format(first))
@@ -184,17 +203,15 @@ if __name__ == '__main__':
             temp = line.split(':')[1].strip()  # 去除两边空格
             lst.append(temp)
     file = lst[0]
+
+    # oalj main.cpp
+    if len(sys.argv) == 3 and sys.argv[1] == "-i":
+        file = sys.argv[2]
     input_name = lst[1].split('#')
     output_name = lst[2].split("#")
     jing = lst[3].split(' ')
     max_time = int(lst[4])
     max_memory = int(lst[5]) * 1024 # kb
-    # print(input_name)
-    # print(output_name)
-    # print(jing)
-    # print(max_memory)
-    # print(max_time)
-
     os.system("rm -rf temp")
     os.system("mkdir temp")
 
