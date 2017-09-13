@@ -73,6 +73,7 @@ def judge():
         child_process = Popen("temp/main", 0, None, stdin = input_file, stdout = output_file, stderr = err_file)
         max_memory_used = 0
         p = psutil.Process(child_process.pid)
+        time.sleep(0.002)
         while child_process.poll() == None:
             mem = get_process_memory(p)
             if time.time() - begin_time > float(max_time) / 1000:
@@ -135,7 +136,7 @@ def judge():
             elif return_diff == 0:
                 col_print("{0}\t".format(num), 7)
                 col_print("AC\t", 2)
-                col_print("{0:.0f}ms\t{1:.2f}MB\t{2}\t{3:.0f}\n".format(use_time, memory_used, return_run, 0), 7)
+                col_print("{0:.0f}ms\t{1:.2f}MB\t{2}\t{3:.0f}\n".format(use_time, memory_used, return_run, unit_score), 7)
                 last_score = last_score + unit_score
         
         # RE
