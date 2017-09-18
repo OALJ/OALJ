@@ -9,9 +9,10 @@ if fst != 'n':
     os.system('sudo cp cogs.py /usr/bin/cogs')
     os.system('sudo cp loj.py /usr/bin/loj')
     os.system('sudo cp syzoj.py /usr/bin/syzoj')
-    ask = input("是否安装pip以及库文件?(y/n, 默认为y)")
+    ask = input("是否安装pip, axel以及库文件?(y/n, 默认为y)")
     if ask != 'n':
         os.system("sudo apt-get install python3-pip")
+        os.system("sudo apt-get install axel")
         os.system("sudo pip3 install urllib3[socks]")
         os.system("sudo pip3 install colorama")
         os.system("sudo pip3 install requests")
