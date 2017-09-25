@@ -50,12 +50,8 @@ max running memory(256(mb)): 256
 
 ```
 TODO LIST:
-  -- 一键扒取大型oj上的测试数据并自动打包成data和config.txt
-    √ cogs.py 已经完成
-    √ loj.py 已经完成
-    √ syzoj 已经完成
-    - codeforces
-    - USACO
+  √√ 彩色输出
+  √√ 显示时间占用
   -√ 显示内存占用
   -- 加入debug mode, 便于刷题时使用
 ```

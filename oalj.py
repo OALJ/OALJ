@@ -90,9 +90,10 @@ def judge():
         err_file.close()
     
     # return_run = os.system("ulimit -t {0} && ulimit -v {1} && temp/main < data/{2} > temp/temp.ans 2> temp/running_log".format(max_time, max_memory, infile))
+
         use_time = float(time.time() - begin_time) * 1000
         
-        #时间校准
+        #(假装自己是)时间校准
         if use_time > 2:
             use_time -= 2
         else:
@@ -158,40 +159,32 @@ def judge():
     # 输出数据
     if wa:
         print_line()
-        print("你在第{0}个测试点出现了错误,下面是该点的输入数据:".format(first))
+        print("你在第{0}个测试点出现了错误, diff信息在diff_log中".format(first))
+        print_line()
+        dl = open("diff_log", "w")
+        dl.write("你在第{0}个测试点出现了错误,下面是该点的输入数据:".format(first))
         cnt = 0
         with open("temp/f_i_f") as dl:
             for line in dl:
-                if cnt >= (30):
-                    print('...')
-                    break
-                print(line, end='')
-                cnt += 1
-        col_print('\n', 7)
-        print_line()
-        print("上面带减号\"-\"的是你的输出,下面带加号\"+\"的是答案输出，\"@@\"之间的数字表示行号:")
-        cnt = 0
+                dl.write(line, end='')
+        dl.write("上面带减号\"-\"的是你的输出,下面带加号\"+\"的是答案输出，\"@@\"之间的数字表示行号:")
         with open("temp/first_diff_log") as dl:
             for line in dl:
-                if cnt >= (30):
-                    print('...')
-                    break
-                print(line, end='')
-                cnt += 1
-    print_line()
+                dl.write(line, end='')
 
 if __name__ == '__main__':
     init(autoreset=True)
     if len(sys.argv) == 2:
         if sys.argv[1] == '-r':
-            os.system("rm -rf ./data")
-            os.system("rm ./config.txt")
+            os.system("rm -rf ./data &> /dev/null")
+            os.system("rm ./config.txt &> /dev/null")
+            os.system("")
             print("已清除data文件夹和config.txt")
             exit(0)
     if os.path.exists("./config.txt") == False:
         print("请填写config.txt")
         cf = open("config.txt", "w+")
-        cf.write("File Name: \nInput Name (example#.in): \nOutput Name (example#.out): \n#s(1 2 3 4): \nmax running time(s): \nmax running memory(mb): ")
+        cf.write("File Name: \nInput Name (example#.in): \nOutput Name (example#.out): \n#s(1 2 3 4): \nmax running time(ms): \nmax running memory(mb): ")
         cf.close()
         quit()
     if os.path.exists("data") == False:
@@ -213,7 +206,7 @@ if __name__ == '__main__':
     jing = lst[3].split(' ')
     max_time = int(lst[4])
     max_memory = int(lst[5]) * 1024 # kb
-    os.system("rm -rf temp")
+    os.system("rm -rf temp &> /dev/null")
     os.system("mkdir temp")
 
     if compile(file):
@@ -221,5 +214,5 @@ if __name__ == '__main__':
         print_line()
     else :
         judge()
-    os.system("rm -rf temp")
+    os.system("rm -rf temp &> /dev/null")
     quit()
