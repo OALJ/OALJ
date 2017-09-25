@@ -16,11 +16,7 @@ max running memory(256(mb)): 256
 
 目前支持的功能：判断 `AC`，`WA`，`TLE`，`MLE`，显示时间使用, 显示内存占用。
 
----
-
-***现在可以直接从COGS爬数据以及`config.txt`辣!!!!!!!!!!!!!***
-
-***EXCITED!!***
+配合
 
 ## 使用方法
 
@@ -32,23 +28,6 @@ max running memory(256(mb)): 256
 
 ### 使用:
 
-#### COGS && LOJ && SYZOJ
-
-在需评测`cpp`文件目录下执行`cogs` 并输入题号来获取数据及`config.txt` 。
-
-可以使用参数或者输入题号。
-
-``` bash
-$ cogs 1 # 获取cogs上题号为1的数据
-$ cogs   # 获取cogs上题目的数据，根据引导使用
-```
-
-效果如图:
-
-![cogs](./cogs.gif)
-
-#### 非cogs
-
 将数据放在data带评测文件目录内，并执行`oalj` 生成`config.txt`模板，然后进行填写。
 
 之后执行`oalj`
@@ -57,7 +36,7 @@ $ cogs   # 获取cogs上题目的数据，根据引导使用
 
 ![ac](./ac.png)
 
-#### OALJ
+### 其它特性
 
 使用`oalj -r`可以删除当前目录下的`data`文件夹和`config.txt`文件。
 
