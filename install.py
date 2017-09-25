@@ -12,7 +12,6 @@ if fst != 'n':
         os.system("sudo apt-get install axel")
         os.system("sudo pip3 install urllib3[socks]")
         os.system("sudo pip3 install colorama")
-        os.system("sudo pip3 install requests")
         os.system("sudo pip3 install psutil")
 else:
     sec = input("你想卸载OALJ(OIer && ACMer's Local Judge)吗? (y/n, 默认为n)")

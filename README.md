@@ -1,6 +1,6 @@
 # OALJ (OIer and ACMer's Local Judge)
 
-LocalJudge [OALJ](https://github.com/kZime/OALJ) developed by [kZime](https://github.com/kZime) && [Margatroid](https://github.com/enter-tainer) with ❤
+LocalJudge [OALJ](https://github.com/OALJ/OALJ) developed by [kZime](https://github.com/kZime) && [Margatroid](https://github.com/enter-tainer) with ❤
 
 example of `config.txt`:
 
