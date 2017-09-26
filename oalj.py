@@ -202,8 +202,7 @@ if __name__ == '__main__':
             os.system("")
             print("已清除data文件夹和config.txt")
             exit(0)
-        elif sys.argv[1] == '-q':
-            run_mode = "Lunatic" # Touhou lover, Touhou lover.jpg
+
     if os.path.exists("./config.txt") == False:
         print("请填写config.txt")
         cf = open("config.txt", "w+")
@@ -222,8 +221,12 @@ if __name__ == '__main__':
     file = lst[0]
 
     # oalj main.cpp
-    if len(sys.argv) == 3 and sys.argv[1] == "-i":
-        file = sys.argv[2]
+    for i in range(1, len(sys.argv)):
+        if sys.argv[i] == "-q":
+            run_mode = "Lunatic" # Touhou lover, Touhou lover.jpg
+        if sys.argv[i] == "-i":
+            file = sys.argv[i + 1]
+            i += 1
     input_name = lst[1].split('#')
     output_name = lst[2].split("#")
     jing = lst[3].split(' ')
