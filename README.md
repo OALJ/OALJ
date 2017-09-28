@@ -34,7 +34,7 @@ max running memory(256(mb)): 256
 
 配合`OJDK`后感受一下~
 
-![cogs.gif](https://i.loli.net/2017/09/28/59cc8964c2589.gif)
+![OALJ-DEMO](https://i.loli.net/2017/09/28/59cc95bd52d18.gif)
 
 ### 其它特性
 
