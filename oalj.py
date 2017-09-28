@@ -63,6 +63,7 @@ def judge(mode):
     if mode == "Normal":
         print("序号\t结果\t时间\t内存\t返回值\t得分")
     result = ""
+
     # 评测过程
     for j in jing:
         num = num + 1
@@ -91,9 +92,6 @@ def judge(mode):
         input_file.close()
         output_file.close()
         err_file.close()
-    
-    # return_run = os.system("ulimit -t {0} && ulimit -v {1} && temp/main < data/{2} > temp/temp.ans 2> temp/running_log".format(max_time, max_memory, infile))
-
         use_time = float(time.time() - begin_time) * 1000
         
         #(假装自己是)时间校准
@@ -110,7 +108,7 @@ def judge(mode):
             if mode == "Lunatic":
                 result += "M"
                 continue
-            col_print("{0}\t".format(num), 7)
+            col_print(" {0}\t".format(num), 7)
             col_print("MLE\t", 3)
             col_print("{0:.0f}ms\t{1:.2f}MB\t{2}\t{3:.0f}\n".format(use_time, memory_used, return_run, 0), 7)
             if wa == False:
@@ -123,7 +121,7 @@ def judge(mode):
             if mode == "Lunatic":
                 result += "T"
                 continue
-            col_print("{0}\t".format(num), 7)
+            col_print(" {0}\t".format(num), 7)
             col_print("TLE\t", 4)
             col_print("{0:.0f}ms\t{1:.2f}MB\t{2}\t{3:.0f}\n".format(use_time, memory_used, return_run, 0), 7)
             if wa == False:
@@ -137,7 +135,7 @@ def judge(mode):
                 if mode == "Lunatic":
                     result += "W"
                     continue
-                col_print("{0}\t".format(num), 7)
+                col_print(" {0}\t".format(num), 7)
                 col_print("WA\t", 1)
                 col_print("{0:.0f}ms\t{1:.2f}MB\t{2}\t{3:.0f}\n".format(use_time, memory_used, return_run, 0), 7)
                 if wa == False:
@@ -150,7 +148,7 @@ def judge(mode):
                 if mode == "Lunatic":
                     result += "A"
                     continue
-                col_print("{0}\t".format(num), 7)
+                col_print(" {0}\t".format(num), 7)
                 col_print("AC\t", 2)
                 col_print("{0:.0f}ms\t{1:.2f}MB\t{2}\t{3:.0f}\n".format(use_time, memory_used, return_run, unit_score), 7)
                 last_score = last_score + unit_score
@@ -160,7 +158,7 @@ def judge(mode):
             if mode == "Lunatic":
                 result += "E"
                 continue
-            col_print("{0}\t".format(num), 7)
+            col_print(" {0}\t".format(num), 7)
             col_print("RE\t", 5)
             col_print("{0:.0f}ms\t{1:.2f}MB\t{2}\t{3:.0f}\n".format(use_time, memory_used, return_run, 0), 7)
             if wa == False:
@@ -171,9 +169,11 @@ def judge(mode):
 
     # 输出结果
     if mode == "Normal":
+        print_line()
         col_print("总分: ", 7)
         col_print("{0:.0f}\n".format(last_score), 2 if wa == 0 else 1)
         col_print("总时间: {0:.0f}ms\n".format(float(the_time)), 7)
+        print_line()
     if mode == "Lunatic":
         print(result)
     # 输出数据
@@ -181,28 +181,29 @@ def judge(mode):
         print_line()
         print("你在第{0}个测试点出现了错误, diff信息在diff_log中".format(first))
         print_line()
-        dl = open("diff_log", "w")
+        dl = open("diff_log", "w+")
         dl.write("你在第{0}个测试点出现了错误,下面是该点的输入数据:".format(first))
         cnt = 0
-        with open("temp/f_i_f") as dl:
-            for line in dl:
-                dl.write(line, end='')
+        with open("temp/f_i_f") as fif:
+            for line in fif:
+                dl.write(line)
         dl.write("上面带减号\"-\"的是你的输出,下面带加号\"+\"的是答案输出，\"@@\"之间的数字表示行号:")
-        with open("temp/first_diff_log") as dl:
-            for line in dl:
-                dl.write(line, end='')
+        with open("temp/first_diff_log") as fdl:
+            for line in fdl:
+                dl.write(line)
+        dl.close()
+
+
+
 
 if __name__ == '__main__':
     init(autoreset=True)
     run_mode = "Normal"
     if len(sys.argv) == 2:
         if sys.argv[1] == '-r':
-            os.system("rm -rf ./data &> /dev/null")
-            os.system("rm ./config.txt &> /dev/null")
-            os.system("")
+            os.system("rm -rf ./data ./config.txt &> /dev/null")
             print("已清除data文件夹和config.txt")
             exit(0)
-
     if os.path.exists("./config.txt") == False:
         print("请填写config.txt")
         cf = open("config.txt", "w+")
@@ -212,14 +213,12 @@ if __name__ == '__main__':
     if os.path.exists("data") == False:
         os.system("data")
         print("请向data文件夹放待测试数据")
-
     with open("./config.txt", "r+") as config:
         lst = list([])
         for line in config:
             temp = line.split(':')[1].strip()  # 去除两边空格
             lst.append(temp)
     file = lst[0]
-
     # oalj main.cpp
     for i in range(1, len(sys.argv)):
         if sys.argv[i] == "-q":
@@ -234,7 +233,6 @@ if __name__ == '__main__':
     max_memory = int(lst[5]) * 1024 # kb
     os.system("rm -rf temp &> /dev/null")
     os.system("mkdir temp")
-
     if compile(file):
         os.system('cat temp/compile_log')
         print_line()
