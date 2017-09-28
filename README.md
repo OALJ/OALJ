@@ -32,9 +32,9 @@ max running memory(256(mb)): 256
 
 之后执行`oalj`
 
-感受一下O(∩_∩)O~~
+配合`OJDK`后感受一下~
 
-![ac](./ac.png)
+![cogs.gif](https://i.loli.net/2017/09/28/59cc8964c2589.gif)
 
 ### 其它特性
 
