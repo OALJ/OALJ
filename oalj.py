@@ -30,7 +30,7 @@ def print_line():
 def compile(file):
     print_line()
     compile_begin = time.time()
-    if os.system('g++ ./{0} -o temp/main {1} 2> temp/compile_log'.format(file, compile_parameter)):
+    if os.system('g++ {0} -o temp/main {1} 2> temp/compile_log'.format(file, compile_parameter)):
         col_print('编译错误\n耗时: {0:.2f}s\n'.format(float(time.time() - compile_begin)), 1)
         print_line()
         return 1
@@ -201,10 +201,10 @@ if __name__ == '__main__':
     run_mode = "Normal"
     if len(sys.argv) == 2:
         if sys.argv[1] == '-r':
-            os.system("rm -rf ./data ./config.txt &> /dev/null")
+            os.system("rm -rf data config.txt &> /dev/null")
             print("已清除data文件夹和config.txt")
             exit(0)
-    if os.path.exists("./config.txt") == False:
+    if os.path.exists("config.txt") == False:
         print("请填写config.txt")
         cf = open("config.txt", "w+")
         cf.write("File Name: \nInput Name (example#.in): \nOutput Name (example#.out): \n#s(1 2 3 4): \nmax running time(ms): \nmax running memory(mb): ")
@@ -213,7 +213,7 @@ if __name__ == '__main__':
     if os.path.exists("data") == False:
         os.system("data")
         print("请向data文件夹放待测试数据")
-    with open("./config.txt", "r+") as config:
+    with open("config.txt", "r+") as config:
         lst = list([])
         for line in config:
             temp = line.split(':')[1].strip()  # 去除两边空格
