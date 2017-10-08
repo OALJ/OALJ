@@ -1,0 +1,8 @@
+{
+	"Name": "aplusb.cpp",
+	"List": [1, 10],
+	"Input": ".in",
+	"Output": ".ans",
+	"MemoryLimit": 256,
+	"TimeLimit": 1000
+}
