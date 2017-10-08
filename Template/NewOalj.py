@@ -8,10 +8,11 @@ import time
 from colorama import init, Fore
 
 # 编译选项
-COMPILEARGV = "-DLOCAL -O2 -Wall"
+COMPILEARGV = "-DLOCAL"
 # diff选项
 DIFFARGV = "-U 0 -b -B -w"
-
+# 运行模式
+Mode = "Normal"
 color_map = {
     1: Fore.RED,
     2: Fore.GREEN,
@@ -45,8 +46,10 @@ def all_clean():
         os.remove("Diff.log")
 
 def check_mode():
-    mode = "Normal"
-    if "-r" in sys.argv:
+    global Mode
+    global COMPILEARGV
+    argvs = sys.argv
+    if "-r" in argvs:
         all_clean()
         if os.path.isdir("data"):
             os.rmdir("data &> /dev/null")
@@ -54,17 +57,27 @@ def check_mode():
             os.remove("config.json")
         print("已经清除数据")
         quit()
-    if "-q" in sys.argv:
+    if "-q" in argvs:
         mode = "Lunatic"
-    if "-i" in sys.argv:
-        Problem["Name"] = sys.argv[sys.argv.index("-i") + 1]
-    return mode
+        argvs.remove("-q")
+    if "-i" in argvs:
+        Problem["Name"] = argvs[argvs.index("-i") + 1]
+        argvs.remove(argvs[argvs.index("-i") + 1])
+        argvs.remove("-i")
+    for cpp_level in argvs:
+        if cpp_level.find("-std=") != -1:
+            COMPILEARGV += " " + cpp_level
+    for optimize_level in argvs:
+        if optimize_level.find("-O") != -1:
+            COMPILEARGV += " " + optimize_level
 
 def color_print(content, col):
+    global Mode
     if Mode == "Normal":
         print(color_map[col] + content, end="")
 
 def line_print():
+    global Mode
     if Mode == "Normal":
         color_print('-' * 50 + '\n', 7)
 
@@ -86,13 +99,10 @@ def compile_program(file):
 def judge():
     print(FileName)
 
-
-
-
 if __name__ == '__main__':
     all_clean()
     Problem = config()
-    Mode = check_mode()
+    check_mode()
     FileName = Problem["Name"]
     os.mkdir("/tmp/oalj")
     if compile_program(Problem["Name"]):
