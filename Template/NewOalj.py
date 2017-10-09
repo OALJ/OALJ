@@ -95,15 +95,54 @@ def compile_program(file):
         color_print("耗时: {0:.2f}s\n".format(CompileTime), 7)
         line_print()
     return CompileReturn
+'''
+
+{
+    "Name": "aplusb.cpp",
+    "List": [1, 10],
+    "Input": ".in",
+    "Output": ".ans",
+    "MemoryLimit": 256,
+    "TimeLimit": 1000
+}
+
+'''
+
+def isdigit(x):
+    try:
+        x = int(x)
+    except:
+        return 0
+    return 1
 
 def judge():
-    print(FileName)
+    global Problem
+    global Mode
+    FileName = Problem["Name"]
+    Queue = Problem["List"]
+    if len(Queue) == 2 and isdigit(Queue[0]) and isdigit(Queue[1]):
+        Queue = list(range(Queue[0], Queue[1] + 1))
+    Queue = list(map(str, Queue))
+    Input = Problem["Input"]
+    Output = Problem["Input"]
+    MemoryLimit = Problem["MemoryLimit"]
+    TimeLimit = Problem["TimeLimit"]
+    UnitScore = round(100 / len)
+    Score = 0
+    Num = 0
+    Ans = True
+    if Mode == "Normal":
+        color_print("序号\t结果\t时间\t内存\t返回值\t得分", 7)
+    
+    for tmp in Queue:
+        Num += 1
+        
+
 
 if __name__ == '__main__':
     all_clean()
     Problem = config()
     check_mode()
-    FileName = Problem["Name"]
     os.mkdir("/tmp/oalj")
     if compile_program(Problem["Name"]):
         if os.path.isfile("/tmp/oalj/Compile.log"):
