@@ -13,7 +13,7 @@ COMPILEARGV = "-DLOCAL"
 DIFFARGV = "-U 0 -b -B -w"
 # 运行模式
 Mode = "Normal"
-color_map = {
+ColorMap = {
     1: Fore.RED,
     2: Fore.GREEN,
     3: Fore.YELLOW,
@@ -39,13 +39,13 @@ def config():
     with open("config.json", "r") as data:
         return json.load(data)
 
-def all_clean():
+def allClean():
     if os.path.isdir("/tmp/oalj"):
         os.system("rm -rf /tmp/oalj")
     if os.path.isfile("Diff.log"):
         os.remove("Diff.log")
 
-def check_mode():
+def checkMode():
     global Mode
     global COMPILEARGV
     argvs = sys.argv
@@ -64,36 +64,36 @@ def check_mode():
         Problem["Name"] = argvs[argvs.index("-i") + 1]
         argvs.remove(argvs[argvs.index("-i") + 1])
         argvs.remove("-i")
-    for cpp_level in argvs:
-        if cpp_level.find("-std=") != -1:
-            COMPILEARGV += " " + cpp_level
-    for optimize_level in argvs:
-        if optimize_level.find("-O") != -1:
-            COMPILEARGV += " " + optimize_level
+    for CppLevel in argvs:
+        if CppLevel.find("-std=") != -1:
+            COMPILEARGV += " " + CppLevel
+    for OptimizeLevel in argvs:
+        if OptimizeLevel.find("-O") != -1:
+            COMPILEARGV += " " + OptimizeLevel
 
-def color_print(content, col):
+def colorPrint(content, col):
     global Mode
     if Mode == "Normal":
-        print(color_map[col] + content, end="")
+        print(ColorMap[col] + content, end="")
 
-def line_print():
+def linePrint():
     global Mode
     if Mode == "Normal":
-        color_print('-' * 50 + '\n', 7)
+        colorPrint('-' * 50 + '\n', 7)
 
-def compile_program(file):
-    line_print()
+def compileProgram(file):
+    linePrint()
     CompileBegin = time.time()
     CompileReturn = os.system("g++ {0} -o /tmp/oalj/main {1} &> /tmp/oalj/Compile.log".format(file, COMPILEARGV))
     CompileTime = float(time.time() - CompileBegin)
     if CompileReturn:
-        color_print("编译错误\n", 1)
-        color_print("耗时: {0:.2f}s\n".format(CompileTime), 7)
-        line_print()
+        colorPrint("编译错误\n", 1)
+        colorPrint("耗时: {0:.2f}s\n".format(CompileTime), 7)
+        linePrint()
     else :
-        color_print("编译成功\n", 2)
-        color_print("耗时: {0:.2f}s\n".format(CompileTime), 7)
-        line_print()
+        colorPrint("编译成功\n", 2)
+        colorPrint("耗时: {0:.2f}s\n".format(CompileTime), 7)
+        linePrint()
     return CompileReturn
 '''
 
@@ -140,19 +140,19 @@ def judge():
 
 
 if __name__ == '__main__':
-    all_clean()
+    allClean()
     Problem = config()
-    check_mode()
+    checkMode()
     os.mkdir("/tmp/oalj")
-    if compile_program(Problem["Name"]):
+    if compileProgram(Problem["Name"]):
         if os.path.isfile("/tmp/oalj/Compile.log"):
             with open("/tmp/oalj/Compile.log", "r") as cl:
                 for line in cl:
                     color_print(line + "\n", 1)
         else:
-            color_print("没有评测代码， 请检查文件目录或者config.json\n", 1)
-        line_print()
+            colorPrint("没有评测代码， 请检查文件目录或者config.json\n", 1)
+        linePrint()
     else :
         judge()
-    all_clean()
+    allClean()
     quit()
