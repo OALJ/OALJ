@@ -1,8 +1,9 @@
 {
-	"Name": "aplusb.cpp",
+	"File": "main.cpp",
+	"Name": "score",
 	"List": [1, 10],
 	"Input": ".in",
 	"Output": ".ans",
-	"MemoryLimit": 256,
+	"MemoryLimit": 128,
 	"TimeLimit": 1000
 }
