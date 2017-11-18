@@ -1,14 +1,16 @@
 #!/usr/bin/env python3
 #-*- coding: utf-8 -*-
 
+import argparse
+import json
 import os
 import sys
 import time
-import colorama 
+import colorama
 import subprocess
 import psutil
 from subprocess import Popen
-from colorama import init, Fore
+from colorama import Fore
 
 
 # 编译选项
@@ -56,7 +58,7 @@ def get_process_memory(p):
 def judge(mode):
     num = 0
     wa = False
-    first = 233333333 
+    first = 233333333
     the_time = 0.0
     unit_score = round(100 / len(jing), 1)
     last_score = 0
@@ -67,8 +69,8 @@ def judge(mode):
     # 评测过程
     for j in jing:
         num = num + 1
-        infile = j.join(input_name)
-        outfile = j.join(output_name)
+        infile = str(j).join(input_name)
+        outfile = str(j).join(output_name)
         process_status = "Running"
         begin_time = time.time()
         input_file = open("data/{0}".format(infile), "r")
@@ -93,7 +95,7 @@ def judge(mode):
         output_file.close()
         err_file.close()
         use_time = float(time.time() - begin_time) * 1000
-        
+
         #(假装自己是)时间校准
         if use_time > 2:
             use_time -= 2
@@ -102,7 +104,7 @@ def judge(mode):
         memory_used = max_memory_used
         the_time += use_time
         return_diff = os.system("diff {0} temp/temp.ans data/{1} >> temp/diff_log".format(diff_parameter, outfile))
-        
+
         # MLE
         if process_status == "MLE":
             if mode == "Lunatic":
@@ -115,7 +117,7 @@ def judge(mode):
                 wa = True
                 get_first_data(infile)
                 first = num if first > num else first
-        
+
         # TLE
         elif process_status == "TLE":
             if mode == "Lunatic":
@@ -129,7 +131,7 @@ def judge(mode):
                 get_first_data(infile)
                 first = num if first > num else first
         elif return_run == 0:
-            
+
             # WA
             if return_diff:
                 if mode == "Lunatic":
@@ -142,7 +144,7 @@ def judge(mode):
                     wa = True
                     get_first_data(infile)
                     first = num if first > num else first
-            
+
             # AC
             elif return_diff == 0:
                 if mode == "Lunatic":
@@ -152,7 +154,7 @@ def judge(mode):
                 col_print("AC\t", 2)
                 col_print("{0:.0f}ms\t{1:.2f}MB\t{2}\t{3:.0f}\n".format(use_time, memory_used, return_run, unit_score), 7)
                 last_score = last_score + unit_score
-        
+
         # RE
         else:
             if mode == "Lunatic":
@@ -193,50 +195,77 @@ def judge(mode):
                 dl.write(line)
         dl.close()
 
-
-
+def parseArg():
+    parser = argparse.ArgumentParser()
+    group = parser.add_mutually_exclusive_group()
+    group.add_argument('-r', '--remove', action='store_true', help='清除data文件夹和config.json')
+    group.add_argument('-i', nargs=1, metavar='File', help='忽略config.json中的Source并指定评测文件')
+    parser.add_argument('-q', '--quiet', action='store_true', help='设置Lunatic模式')
+    return parser.parse_args()
 
 if __name__ == '__main__':
-    init(autoreset=True)
-    run_mode = "Normal"
-    if len(sys.argv) == 2:
-        if sys.argv[1] == '-r':
-            os.system("rm -rf data config.txt &> /dev/null")
-            print("已清除data文件夹和config.txt")
+    colorama.init(autoreset=True)
+    args = parseArg()
+    if args.remove:
+        if os.system("rm -rf data config.json &> /dev/null") == 0:
+            print("已清除data文件夹和config.json")
             exit(0)
-    if os.path.exists("config.txt") == False:
-        print("请填写config.txt")
-        cf = open("config.txt", "w+")
-        cf.write("File Name: \nInput Name (example#.in): \nOutput Name (example#.out): \n#s(1 2 3 4): \nmax running time(ms): \nmax running memory(mb): ")
+        else:
+            print("无法删除data文件夹和config.json（或许其有访问权限）")
+            exit(1)
+    run_mode = "Lunatic" if args.quiet else "Normal" # Touhou lover, Touhou lover.jpg
+
+    if os.path.exists("config.json") == False:
+        print("请填写config.json")
+        cf = open("config.json", "w+")
+        cf.write('{\n')
+        cf.write('  "Source": "test.cpp",\n')
+        cf.write('  "Input": "test#.in",\n')
+        cf.write('  "Output": "test#.ans",\n')
+        cf.write('  "#": [0, 1, 2, 3],\n')
+        cf.write('  "Time Limit": 1,\n')
+        cf.write('  "Memory Limit": 256\n')
+        cf.wrote('}')
         cf.close()
         quit()
+
     if os.path.exists("data") == False:
         os.system("data")
         print("请向data文件夹放待测试数据")
-    with open("config.txt", "r+") as config:
-        lst = list([])
-        for line in config:
-            temp = line.split(':')[1].strip()  # 去除两边空格
-            lst.append(temp)
-    file = lst[0]
-    # oalj main.cpp
-    for i in range(1, len(sys.argv)):
-        if sys.argv[i] == "-q":
-            run_mode = "Lunatic" # Touhou lover, Touhou lover.jpg
-        if sys.argv[i] == "-i":
-            file = sys.argv[i + 1]
-            i += 1
-    input_name = lst[1].split('#')
-    output_name = lst[2].split("#")
-    jing = lst[3].split(' ')
-    max_time = int(lst[4])
-    max_memory = int(lst[5]) * 1024 # kb
-    os.system("rm -rf temp &> /dev/null")
-    os.system("mkdir temp")
-    if compile(file):
-        os.system('cat temp/compile_log')
-        print_line()
-    else :
-        judge(run_mode)
-    os.system("rm -rf temp &> /dev/null")
+        exit(1)
+
+    with open("config.json", "r+") as config:
+        config = json.loads(''.join(config.readlines()))
+    if args.i != None:
+        file = args.i
+    else:
+        file = config.get("Source")
+        if file == None:
+            print('没有源文件！请在config.json中添加"Source"一项或者指定参数-i')
+            exit(1)
+
+    try:
+        input_name = config["Input"].split('#')
+        output_name = config["Output"].split("#")
+        jing = config["#"]
+        max_time = int(config["Time Limit"])
+        max_memory = int(config["Memory Limit"]) * 1024 # kb
+    except KeyError as e:
+        print('config.json中缺少'+str(e)+'项！（或许是大小写的问题）')
+        exit(1)
+
+    try:
+        os.system("rm -rf temp &> /dev/null")
+        os.system("mkdir temp")
+        if compile(file):
+            os.system('cat temp/compile_log')
+            print_line()
+        else :
+            judge(run_mode)
+        os.system("rm -rf temp &> /dev/null")
+    except PermissionError as e:
+        print('权限错误：无法访问'+e.filename)
+        print('或许你可以以sudo运行oalj')
+        exit(1)
+
     quit()
