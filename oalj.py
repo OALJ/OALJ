@@ -2,22 +2,13 @@
 #-*- coding: utf-8 -*-
 
 import argparse
-<<<<<<< HEAD
 import colorama
-=======
->>>>>>> e953115c60cc9069e532ec4d5da5e868a0d1fd28
 import json
 import os
 import psutil
 import subprocess
 import sys
 import time
-<<<<<<< HEAD
-=======
-import colorama
-import subprocess
-import psutil
->>>>>>> e953115c60cc9069e532ec4d5da5e868a0d1fd28
 from subprocess import Popen
 from colorama import Fore
 
@@ -218,16 +209,9 @@ if __name__ == '__main__':
     if args.remove:
         if os.system("rm -rf data config.json &> /dev/null") == 0:
             print("已清除data文件夹和config.json")
-<<<<<<< HEAD
         else:
             print("无法删除data文件夹和config.json（或许其有访问权限）")
-        exit(0)
-=======
-            exit(0)
-        else:
-            print("无法删除data文件夹和config.json（或许其有访问权限）")
-            exit(1)
->>>>>>> e953115c60cc9069e532ec4d5da5e868a0d1fd28
+        exit(1)
     run_mode = "Lunatic" if args.quiet else "Normal" # Touhou lover, Touhou lover.jpg
 
     if os.path.exists("config.json") == False:
@@ -240,11 +224,7 @@ if __name__ == '__main__':
         cf.write('  "#": [0, 1, 2, 3],\n')
         cf.write('  "Time Limit": 1,\n')
         cf.write('  "Memory Limit": 256\n')
-<<<<<<< HEAD
         cf.write('}')
-=======
-        cf.wrote('}')
->>>>>>> e953115c60cc9069e532ec4d5da5e868a0d1fd28
         cf.close()
         quit()
 
@@ -256,12 +236,7 @@ if __name__ == '__main__':
     with open("config.json", "r+") as config:
         config = json.loads(''.join(config.readlines()))
     if args.i != None:
-<<<<<<< HEAD
         file = args.i[0]
-        print(repr(file))
-=======
-        file = args.i
->>>>>>> e953115c60cc9069e532ec4d5da5e868a0d1fd28
     else:
         file = config.get("Source")
         if file == None:
@@ -276,17 +251,6 @@ if __name__ == '__main__':
         max_memory = int(config["Memory Limit"]) * 1024 # kb
     except KeyError as e:
         print('config.json中缺少'+str(e)+'项！（或许是大小写的问题）')
-<<<<<<< HEAD
-    os.system("rm -rf temp &> /dev/null")
-    os.system("mkdir temp")
-    if compile(file):
-        os.system('cat temp/compile_log')
-        print_line()
-    else :
-        judge(run_mode)
-    os.system("rm -rf temp &> /dev/null")
-=======
-        exit(1)
 
     try:
         os.system("rm -rf temp &> /dev/null")
@@ -302,5 +266,4 @@ if __name__ == '__main__':
         print('或许你可以以sudo运行oalj')
         exit(1)
 
->>>>>>> e953115c60cc9069e532ec4d5da5e868a0d1fd28
     quit()
