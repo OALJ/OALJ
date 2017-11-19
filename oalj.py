@@ -2,13 +2,13 @@
 #-*- coding: utf-8 -*-
 
 import argparse
+import colorama
 import json
 import os
+import psutil
+import subprocess
 import sys
 import time
-import colorama
-import subprocess
-import psutil
 from subprocess import Popen
 from colorama import Fore
 
@@ -225,7 +225,7 @@ if __name__ == '__main__':
         cf.write('  "#": [0, 1, 2, 3],\n')
         cf.write('  "Time Limit": 1,\n')
         cf.write('  "Memory Limit": 256\n')
-        cf.wrote('}')
+        cf.write('}')
         cf.close()
         quit()
 
@@ -237,7 +237,7 @@ if __name__ == '__main__':
     with open("config.json", "r+") as config:
         config = json.loads(''.join(config.readlines()))
     if args.i != None:
-        file = args.i
+        file = args.i[0]
     else:
         file = config.get("Source")
         if file == None:
