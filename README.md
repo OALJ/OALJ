@@ -10,7 +10,7 @@ example of `config.json`:
   "Input": "test#.in",
   "Output": "test#.ans",
   "#": [0, 1, 2, 3],
-  "Time Limit": 1,
+  "Time Limit": 1000,
   "Memory Limit": 256
 }
 ```
@@ -48,12 +48,13 @@ example of `config.json`:
 - 缩进不强制
 - "#"的值可为数字也可为字符串（用双引号扩起来），甚至两者交替： `"#": [1, 2, 3, "4", "5", "6", 7, "8", 9, 10]`
 - "Source"项可忽略（当然，这要求你执行时添加'-i'参数，见下）
+- Time Limt和Memory Limit单位分别是ms和MB
 
 ### 其它特性
 
-使用`oalj -r`可以删除当前目录下的`data`文件夹和`config.txt`文件。
+使用`oalj -r`可以删除当前目录下的`data`文件夹和`config.json`文件。
 
-使用`oalj -i [test.cpp]` 将忽略掉`config.txt` 中的`File name` , 直接对`[test.cpp]` 进行评测。
+使用`oalj -i [test.cpp]` 将忽略掉`config.json` 中的`Source` , 直接对`[test.cpp]` 进行评测。
 
 ###  注意事项
 
