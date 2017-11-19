@@ -209,9 +209,10 @@ if __name__ == '__main__':
     if args.remove:
         if os.system("rm -rf data config.json &> /dev/null") == 0:
             print("已清除data文件夹和config.json")
+            exit(0)
         else:
             print("无法删除data文件夹和config.json（或许其有访问权限）")
-        exit(1)
+            exit(1)
     run_mode = "Lunatic" if args.quiet else "Normal" # Touhou lover, Touhou lover.jpg
 
     if os.path.exists("config.json") == False:
@@ -251,6 +252,7 @@ if __name__ == '__main__':
         max_memory = int(config["Memory Limit"]) * 1024 # kb
     except KeyError as e:
         print('config.json中缺少'+str(e)+'项！（或许是大小写的问题）')
+        exit(1)
 
     try:
         os.system("rm -rf temp &> /dev/null")
