@@ -1,3 +1,5 @@
+# OALJ's development has been stoped, you may use [RLJ](https://github.com/rqy1458814497/RLJ) instead
+
 # OALJ (OIer and ACMer's Local Judge)
 
 LocalJudge [OALJ](https://github.com/OALJ/OALJ) developed by [kZime](https://github.com/kZime) && [Margatroid](https://github.com/enter-tainer) with ❤
