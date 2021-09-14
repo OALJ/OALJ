@@ -248,6 +248,9 @@ if __name__ == '__main__':
         input_name = config["Input"].split('#')
         output_name = config["Output"].split("#")
         jing = config["#"]
+        if len(jing) == 1 and '~' in jing[0]:
+            jing = jing[0].split('~')
+            jing = range( int( jing[0].strip() ), int( jing[1].strip() ) + 1)
         max_time = int(config["Time Limit"])
         max_memory = int(config["Memory Limit"]) * 1024 # kb
     except KeyError as e:

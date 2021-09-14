@@ -10,6 +10,6 @@ cmake-build-debug
 CMakeLists.txt
 .idea/
 data
-config.txt
+config.json
 *.cpp
 Template

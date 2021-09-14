@@ -1,4 +1,4 @@
-# OALJ's development has been stoped, you may use [RLJ](https://github.com/rqy1458814497/RLJ) instead
+### ~~ OALJ's development has been stoped, you may use [RLJ](https://github.com/rqy1458814497/RLJ) instead ~~
 
 # OALJ (OIer and ACMer's Local Judge)
 
@@ -12,6 +12,7 @@ example of `config.json`:
   "Input": "test#.in",
   "Output": "test#.ans",
   "#": [0, 1, 2, 3],
+//"#": ["0~3],
   "Time Limit": 1000,
   "Memory Limit": 256
 }
@@ -48,7 +49,7 @@ example of `config.json`:
 注：
 - 大小写敏感
 - 缩进不强制
-- "#"的值可为数字也可为字符串（用双引号扩起来），甚至两者交替： `"#": [1, 2, 3, "4", "5", "6", 7, "8", 9, 10]`
+- "#"的值可为数字也可为字符串（用双引号扩起来），甚至两者交替： `"#": [1, "2", 3]`，或者使用一个区间（闭区间）： `"#": [" 0 ~ 12 "]`
 - "Source"项可忽略（当然，这要求你执行时添加'-i'参数，见下）
 - Time Limt和Memory Limit单位分别是ms和MB
 
