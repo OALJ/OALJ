@@ -14,9 +14,10 @@ from colorama import Fore
 
 
 # 编译选项
-compile_parameter = "-DLOCAL -O2 -Wall"
+compile_parameter = "-DLOCAL -O2 -Wall -std=c++14"
 # diff选项
-diff_parameter = "-U 0 -b -B -w"
+# diff_parameter = "-U 0 -b -B -w -y"
+diff_parameter = "--width=80 --suppress-common-lines --side-by-side"
 
 
 color_map = { 1:Fore.RED, 2:Fore.GREEN, 3:Fore.YELLOW, 4:Fore.BLUE, 5:Fore.MAGENTA, 6:Fore.CYAN, 7:Fore.WHITE}
@@ -186,10 +187,18 @@ def judge(mode):
         dl = open("diff_log", "w+")
         dl.write("你在第{0}个测试点出现了错误,下面是该点的输入数据:".format(first))
         cnt = 0
+
+        
         with open("temp/f_i_f") as fif:
             for line in fif:
+                cnt = cnt + 1
                 dl.write(line)
-        dl.write("上面带减号\"-\"的是你的输出,下面带加号\"+\"的是答案输出，\"@@\"之间的数字表示行号:")
+                if cnt == 20:
+                    dl.write('...\n\n')
+                    break
+
+        print('')
+        dl.write("上面带减号\"-\"的是你的输出,下面带加号\"+\"的是答案输出，\"@@\"之间的数字表示行号:\n")
         with open("temp/first_diff_log") as fdl:
             for line in fdl:
                 dl.write(line)
@@ -201,6 +210,7 @@ def parseArg():
     group.add_argument('-r', '--remove', action='store_true', help='清除data文件夹和config.json')
     group.add_argument('-i', nargs=1, metavar='File', help='忽略config.json中的Source并指定评测文件')
     parser.add_argument('-q', '--quiet', action='store_true', help='设置Lunatic模式')
+    parser.add_argument('-d', '--debug', action='store_true', help='DEBUGING...') # ...
     return parser.parse_args()
 
 if __name__ == '__main__':
@@ -223,8 +233,8 @@ if __name__ == '__main__':
         cf.write('  "Input": "test#.in",\n')
         cf.write('  "Output": "test#.ans",\n')
         cf.write('  "#": [0, 1, 2, 3],\n')
-        cf.write('  "Time Limit": 1,\n')
-        cf.write('  "Memory Limit": 256\n')
+        cf.write('  "Time Limit": 1000,\n')
+        cf.write('  "Memory Limit": 1024\n')
         cf.write('}')
         cf.close()
         quit()
@@ -248,7 +258,7 @@ if __name__ == '__main__':
         input_name = config["Input"].split('#')
         output_name = config["Output"].split("#")
         jing = config["#"]
-        if len(jing) == 1 and '~' in jing[0]:
+        if len(jing) == 1 and '~' in str(jing[0]):
             jing = jing[0].split('~')
             jing = range( int( jing[0].strip() ), int( jing[1].strip() ) + 1)
         max_time = int(config["Time Limit"])
@@ -265,7 +275,10 @@ if __name__ == '__main__':
             print_line()
         else :
             judge(run_mode)
-        os.system("rm -rf temp &> /dev/null")
+        if not args.debug:
+            os.system("rm -rf temp &> /dev/null")
+        else:
+            os.system("vim diff_log")
     except PermissionError as e:
         print('权限错误：无法访问'+e.filename)
         print('或许你可以以sudo运行oalj')
